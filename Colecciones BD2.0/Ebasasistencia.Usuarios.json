@@ -1,0 +1,19 @@
+[{
+  "_id": {
+    "$oid": "66b923e54fec090a0ee40e42"
+  },
+  "Documento": "",
+  "Correo": "",
+  "Sexo": "",
+  "Edad": "",
+  "Municipio": "",
+  "EstadoCivil": "",
+  "TipoDeDocumento": "",
+  "TipoUsuario": "",
+  "Direccion": "",
+  "TipoDePoblacion": "",
+  "Contraseña": "",
+  "Apellidos": "",
+  "Nombres": "",
+  "Telefono": ""
+}]

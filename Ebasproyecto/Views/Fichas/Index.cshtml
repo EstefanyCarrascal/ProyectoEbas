@@ -1,0 +1,244 @@
+﻿@using Ebasproyecto.Model
+@model List<Fichas>
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fichas</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+
+    <button onclick="User(event)" id="openModalBtn">Crear</button>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Jornada</th>
+                    <th scope="col">Modalidad</th>
+                    <th scope="col">Fecha Inicio</th>
+                    <th scope="col">Fecha Fin</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            @foreach (var list in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>@list.Codigo</td>
+                        <td>@list.Tipo</td>
+                        <td>@list.Jornada</td>
+                        <td>@list.Modalidad</td>
+                        <td>@list.FechaInicio</td>
+                        <td>@list.FechaFin</td>
+                        <td>
+                            <button onclick="Editar(event, '@list.Id.ToString()', '@list.Codigo', '@list.Tipo', '@list.Jornada', '@list.Modalidad', '@list.FechaInicio', '@list.FechaFin')">&#x270F; Editar</button>
+                            <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+
+    <!-- Modal para Crear Nuevo Personal Administrativo -->
+    <div id="CrearFichas" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCrearModalBtn">&times;</span>
+            <h4>Crear nueva Ficha</h4>
+            <form action="@Url.Action("Crear", "Fichas")" method="post">
+                <div class="mb-3">
+                    <label for="Codigo" class="form-label">Código</label>
+                    <input id="Codigo" type="text" name="Codigo" class="form-control" placeholder="Ingrese el código de la ficha" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Tipo" class="form-label">Tipo</label>
+                    <select id="Tipo" name="Tipo" class="form-control" placeholder="Seleccione el tipo de ficha">
+                        <option value="Abierta">Abierta</option>
+                        <option value="Cerrada">Cerrada</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="Jornada" class="form-label">Jornada</label>
+                    <input id="Jornada" type="text" name="Jornada" class="form-control" placeholder="Ingrese la jornada" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="Modalidad" class="form-label">Modalidad</label>
+                    <input id="Modalidad" type="text" name="Modalidad" class="form-control" placeholder="Ingrese la modalidad" required />
+                </div>
+                <div class="mb-3">
+                    <label for="FechaInicio" class="form-label">Fecha Inicio</label>
+                    <input id="FechaInicio" type="text" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha inicio" required />
+                </div>
+                <div class="mb-3">
+                    <label for="FechaFin" class="form-label">Fecha Fin</label>
+                    <input id="FechaFin" type="text" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin" required />
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-secondary btn-block">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Personal Administrativo -->
+    <div id="Editar" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeEditModalBtn">&times;</span>
+            <h4>Editar Ficha</h4>
+            <form action="@Url.Action("Editar", "Fichas")" method="post">
+                <input type="hidden" id="EditarId" name="objectId" />
+                <div class="mb-3">
+                    <label for="EditarCodigo" class="form-label">Codigo</label>
+                    <input id="EditarCodigo" type="text" name="Codigo" class="form-control" placeholder="Ingrese el codigo" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTipo" class="form-label">Tipo</label>
+                    <select id="EditarTipo" name="Tipo" class="form-control" placeholder="Seleccione el tipo de ficha">
+                        <option value="Abierta">Abierta</option>
+                        <option value="Cerrada">Cerrada</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="EditarJornada" class="form-label">Jornada</label>
+                    <input id="EditarJornada" type="text" name="Jornada" class="form-control" placeholder="Ingrese la jornada" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarModalidad" class="form-label">Modalidad</label>
+                    <input id="EditarModalidad" type="text" name="Modalidad" class="form-control" placeholder="Ingrese la modalidad" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarFechaInicio" class="form-label">Fecha Inicio</label>
+                    <input id="EditarFechaInicio" type="text" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha Inicio" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarFechaFin" class="form-label">Fecha Fin</label>
+                    <input id="EditarFechaFin" type="text" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin" required />
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-secondary btn-block">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Confirmación de Eliminación -->
+    <div id="Eliminar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmación de Eliminación</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="Cerrar()">&times;</button>
+            </div>
+            <form action="@Url.Action("Eliminar", "PersonalAdministrativo")" method="post">
+                <input type="hidden" id="deleteId" name="objectId" />
+                <p>¿Estás seguro de que quieres eliminar este equipo?</p>
+                <button type="submit" class="btn btn-danger">Sí</button>
+                <button type="button" class="btn btn-secondary" onclick="Cerrar()">No</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // Modal para crear fichas
+        var createModal = document.getElementById("CrearFichas");
+        var openCreateModalBtn = document.getElementById("openModalBtn");
+        var closeCreateModalBtn = document.getElementById("closeCrearModalBtn");
+
+        openCreateModalBtn.onclick = function () {
+            createModal.style.display = "block";
+        }
+
+        closeCreateModalBtn.onclick = function () {
+            createModal.style.display = "none";
+        }
+
+        // Modal para editar fichas
+        var editModal = document.getElementById("Editar");
+        var closeEditModalBtn = document.getElementById("closeEditModalBtn");
+
+        function Editar(event, id, Codigo, Tipo, Jornada, Modalidad, FechaInicio, FechaFin) {
+            event.preventDefault();
+            document.getElementById("EditarId").value = id;
+            document.getElementById("EditarCodigo").value = Codigo;
+            document.getElementById("Tipo").value = Tipo;
+            document.getElementById("EditarJornada").value = Jornada;
+            document.getElementById("EditarModalidad").value = Modalidad;
+            document.getElementById("EditarFechaInicio").value = FechaInicio;
+            document.getElementById("EditarFechaFin").value = FechaFin;
+            editModal.style.display = "block";
+        }
+
+        closeEditModalBtn.onclick = function () {
+            editModal.style.display = "none";
+        }
+
+        // Modal para eliminar fichas
+        var deleteModal = document.getElementById("Eliminar");
+
+        function Eliminar(event, id) {
+            event.preventDefault();
+            document.getElementById("deleteId").value = id;
+            deleteModal.style.display = "block";
+        }
+
+        function Cerrar() {
+            deleteModal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == createModal) {
+                createModal.style.display = "none";
+            } else if (event.target == editModal) {
+                editModal.style.display = "none";
+            } else if (event.target == deleteModal) {
+                deleteModal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

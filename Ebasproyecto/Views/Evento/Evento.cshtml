@@ -1,0 +1,214 @@
+﻿@using Ebasproyecto.Model
+@model List<Evento>
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programas de formación</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+
+    <button onclick="User(event)" id="openModalBtn">Crear</button>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre Evento</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Organizador</th>
+                    <th scope="col">Fecha Evento</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            @foreach (var list in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>@list.NombreEvento</td>
+                        <td>@list.Descripcion</td>
+                        <td>@list.Organizador</td>
+                        <td>@list.FechaEvento</td>
+                        <td>
+                            <button onclick="Editar(event, '@list.Id.ToString()', '@list.NombreEvento', '@list.Descripcion', '@list.Organizador', '@list.FechaEvento')">&#x270F; Editar</button>
+                            <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+
+    <!-- Modal para Crear Nuevo Programa -->
+    <div id="CrearEvento" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCrearModalBtn">&times;</span>
+            <h4>Crear nuevo programa de formación</h4>
+            <form action="@Url.Action("Crear", "Evento")" method="post">
+                <div class="mb-3">
+                    <label for="NombreEvento" class="form-label">Nombre Evento</label>
+                    <input id="NombreEvento" type="text" name="NombreEvento" class="form-control" placeholder="Ingrese el nombre del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Descripcion" class="form-label">Descripción</label>
+                    <input id="Descripcion" type="text" name="Descripcion" class="form-control" placeholder="Ingrese la descripción del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Organizador" class="form-label">Organizador</label>
+                    <input id="Organizador" type="text" name="Organizador" class="form-control" placeholder="Ingrese el nombre del organizador del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="FechaEvento" class="form-label">FechaEvento</label>
+                    <input id="FechaEvento" type="text" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-secondary btn-block">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Programa -->
+    <div id="Editar" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeEditModalBtn">&times;</span>
+            <h4>Editar Programa de Formación</h4>
+            <form action="@Url.Action("Editar", "Evento")" method="post">
+                <input type="hidden" id="EditarId" name="objectId" />
+                <div class="mb-3">
+                    <label for="EditarNombreEvento" class="form-label">Nombre</label>
+                    <input id="EditarNombreEvento" type="text" name="NombreEvento" class="form-control" placeholder="Ingrese el nombre del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarDescripcion" class="form-label">Descripción</label>
+                    <input id="EditarDescripcion" type="text" name="Descripcion" class="form-control" placeholder="Ingrese la descripcion del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarOrganizador" class="form-label">Organizador</label>
+                    <input id="EditarOrganizador" type="text" name="Organizador" class="form-control" placeholder="Ingrese el nombre del organizador del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarFechaEvento" class="form-label">Fecha Evento</label>
+                    <input id="EditarFechaEvento" type="text" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-secondary btn-block">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Confirmación de Eliminación -->
+    <div id="Eliminar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmación de Eliminación</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="Cerrar()">&times;</button>
+            </div>
+            <form action="@Url.Action("Eliminar", "Evento")" method="post">
+                <input type="hidden" id="deleteId" name="objectId" />
+                <p>¿Estás seguro de que quieres eliminar este equipo?</p>
+                <button type="submit" class="btn btn-danger">Sí</button>
+                <button type="button" class="btn btn-secondary" onclick="Cerrar()">No</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal para crear programa
+        var createModal = document.getElementById("CrearEvento");
+        var openCreateModalBtn = document.getElementById("openModalBtn");
+        var closeCreateModalBtn = document.getElementById("closeCrearModalBtn");
+
+        openCreateModalBtn.onclick = function () {
+            createModal.style.display = "block";
+        }
+
+        closeCreateModalBtn.onclick = function () {
+            createModal.style.display = "none";
+        }
+
+        // Modal para editar programa
+        var editModal = document.getElementById("Editar");
+        var closeEditModalBtn = document.getElementById("closeEditModalBtn");
+
+        function Editar(event, id, NombreEvento, Descripcion, Organizador, FechaEvento) {
+            event.preventDefault();
+            document.getElementById("EditarId").value = id;
+            document.getElementById("EditarNombreEvento").value = NombreEvento;
+            document.getElementById("EditarDescripcion").value = Descripcion;
+            document.getElementById("EditarOrganizador").value = Organizador;
+            document.getElementById("EditarFechaEvento").value = FechaEvento;
+            editModal.style.display = "block";
+        }
+
+        closeEditModalBtn.onclick = function () {
+            editModal.style.display = "none";
+        }
+
+        // Modal para eliminar programa
+        var deleteModal = document.getElementById("Eliminar");
+
+        function Eliminar(event, id) {
+            event.preventDefault();
+            document.getElementById("deleteId").value = id;
+            deleteModal.style.display = "block";
+        }
+
+        function Cerrar() {
+            deleteModal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == createModal) {
+                createModal.style.display = "none";
+            } else if (event.target == editModal) {
+                editModal.style.display = "none";
+            } else if (event.target == deleteModal) {
+                deleteModal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
+
