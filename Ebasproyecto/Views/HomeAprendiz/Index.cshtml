@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout A.cshtml";
+}
+
+<h2>Eventos </h2>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nombre Evento</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Organizador</th>
+                <th scope="col">Fecha Evento</th>
+                <th scope="col"> Firma</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evento in Model)
+            {
+                <tr>
+                    <td>@evento.NombreEvento</td>
+                    <td>@evento.Descripcion</td>
+                    <td>@evento.Organizador</td>
+                    <td>@evento.FechaEvento</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

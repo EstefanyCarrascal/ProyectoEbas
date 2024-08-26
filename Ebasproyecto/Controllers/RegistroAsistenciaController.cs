@@ -65,7 +65,7 @@ namespace Ebasproyecto.Controllers
                     Id = parsedObjectId,
                     Fecha = Fecha,
                     Hora = Hora,
-                    Asistio = Asistio
+               
                 };
 
                 collection.ReplaceOne(d => d.Id == parsedObjectId, Registro);
