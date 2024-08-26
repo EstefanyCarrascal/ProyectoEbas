@@ -20,7 +20,6 @@ namespace Ebasproyecto.Model
         [BsonElement("Hora")]
         public string Hora { get; set; }
 
-        [BsonElement("Asistio")]
-        public string Asistio { get; set; }
+    
     }
 }
