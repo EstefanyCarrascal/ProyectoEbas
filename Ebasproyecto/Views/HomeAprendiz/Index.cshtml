@@ -1,21 +1,22 @@
 ﻿
+@model List<Ebasproyecto.Model.Evento>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout A.cshtml";
 }
 
-<h2>Eventos </h2>
+<h2>Eventos Registrados</h2>
 
 <div class="table-responsive">
-    <table class="table">
-        <thead class="thead-dark">
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th scope="col">Nombre Evento</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Organizador</th>
-                <th scope="col">Fecha Evento</th>
-                <th scope="col"> Firma</th>
-
+                <th>Nombre Evento</th>
+                <th>Descripción</th>
+                <th>Organizador</th>
+                <th>Fecha del Evento</th>
+                <th>Tipo</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -26,7 +27,7 @@
                     <td>@evento.Descripcion</td>
                     <td>@evento.Organizador</td>
                     <td>@evento.FechaEvento</td>
-                    
+                    <td>@evento.Tipo</td>
                 </tr>
             }
         </tbody>

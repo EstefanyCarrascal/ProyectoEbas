@@ -15,7 +15,7 @@ namespace Ebasproyecto.Model
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
 
-        [BsonElement("Codigo")]
+        [BsonElement("Codigo")] 
         public string Codigo { get; set; }
 
         [BsonElement("Jornada")]

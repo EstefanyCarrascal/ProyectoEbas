@@ -13,7 +13,7 @@ namespace Ebasproyecto.Model
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
 
-        [BsonElement("Descripcion")]
+        [BsonElement("Descripcion")] 
         public string Descripcion { get; set; }
 
         [BsonElement("FechaEvento")]
@@ -24,6 +24,10 @@ namespace Ebasproyecto.Model
 
         [BsonElement("NombreEvento")]
         public string NombreEvento { get; set; }
+
+        [BsonElement("Tipo")]
+        public string Tipo { get; set; } 
+
 
     }
 }

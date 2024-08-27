@@ -17,8 +17,8 @@ namespace Ebasproyecto.Controllers
             var collection = database.GetCollection<Evento>("Evento");
 
             // Filtrar los eventos que sean para el rol "Aprendiz"
-            var filtro = Builders<Evento>.Filter.Eq("Rol","Aprendiz");
-            List<Evento> eventosAprendiz = collection.Find(filtro).ToList();
+           
+            List<Evento> eventosAprendiz = collection.Find(d => true).ToList();
 
             // Retornar la vista con los eventos del aprendiz
             return View(eventosAprendiz);

@@ -31,7 +31,7 @@ namespace Ebasproyecto.Controllers
                 var collection = database.GetCollection<ProgramaFormacion>("ProgramaFormacion"); // Consistencia en el nombre de la colección
                 var ProgramaFormacion = new ProgramaFormacion
                 {
-                    Codigo = Codigo,
+                    codigo = Codigo,
                     Tipo = Tipo,
                     Nombre = Nombre,
                     Duracion = Duracion,
@@ -66,7 +66,7 @@ namespace Ebasproyecto.Controllers
                 var ProgramaFormacion = new ProgramaFormacion
                 {
                     Id = parsedObjectId,
-                    Codigo = Codigo,
+                    codigo = Codigo,
                     Tipo = Tipo,
                     Nombre = Nombre,
                     Duracion = Duracion,

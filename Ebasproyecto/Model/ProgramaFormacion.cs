@@ -12,10 +12,10 @@ namespace Ebasproyecto.Model
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        public ObjectId Id { get; set; }  
 
-        [BsonElement("Codigo")]
-        public string Codigo { get; set; }
+        [BsonElement("codigo")]
+        public string codigo { get; set; }
 
         [BsonElement("Nombre")]
         public string Nombre { get; set; }

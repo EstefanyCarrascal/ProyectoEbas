@@ -22,7 +22,7 @@ namespace Ebasproyecto.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(string NombreEvento, string Descripcion, string Organizador, string FechaEvento)
+        public ActionResult Crear(string NombreEvento, string Descripcion, string Organizador, string FechaEvento, string Tipo)
         {
             try
             {
@@ -34,6 +34,7 @@ namespace Ebasproyecto.Controllers
                     Descripcion = Descripcion,
                     Organizador = Organizador,
                     FechaEvento = FechaEvento,
+                    Tipo = Tipo, 
                 };
 
                 collection.InsertOne(Evento);
