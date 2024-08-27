@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuario</title>
+    <link rel="stylesheet" href="Estilos2.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Registrar Usuario</h2>
+        <form action="@Url.Action("Registrar","Login")" method="post">
+            <div class="input-group">
+                <label for="Nombres">Nombres</label>
+                <input type="text" id="Nombres" name="Nombres" required>
+            </div>
+            <div class="input-group">
+                <label for="Apellidos">Apellidos</label>
+                <input type="text" id="Apellidos" name="Apellidos" required>
+            </div>
+            <div class="input-group">
+                <label for="Correo">Correo Electrónico</label>
+                <input type="email" id="Correo" name="Correo" required>
+            </div>
+            <div class="input-group">
+                <label for="Contraseña">Contraseña</label>
+                <input type="password" id="Contraseña" name="Contraseña" required>
+            </div>
+            <div class="input-group">
+                <label for="TipoUsuario">Tipo de Usuario</label>
+                <select id="TipoUsuario" name="TipoUsuario" required>
+                    <option value="PersonalAdministrativo">Personal Administrativo</option>
+                    <option value="Aprendiz">Aprendiz</option>
+                </select>
+            </div>
+            <button type="submit">Registrar</button>
+            <p class="login-text">¿Ya tienes una cuenta? <a href="@Url.Action("Index","Login")">Inicia sesión aquí</a></p>
+        </form>
+    </div>
+</body>
+</html>

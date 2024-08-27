@@ -1,79 +1,31 @@
 ﻿
 @{
-    ViewBag.Title = "Login";
+    Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="../Login/Estilos.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="Estilos.css">
 </head>
-
 <body>
-    <div class="wrapper">
-        <span class="bg-animate"></span>
-        <span class="bg-animate2"></span>
-
-        <div class="form-box login">
-            <h2 class="animation" style="--i:0; --j:21">Inicio de sesión</h2>
-            <form action="/Login/Login" method="post">
-                <div class="input-box animation" style="--i:1; --j:22">
-                    <input type="email" name="Correo" id="Correo" required>
-                    <label>Correo</label>
-                    <i class="bx bxs-user"></i>
-                </div>
-                <div class="input-box animation" style="--i:2; --j:23">
-                    <input type="password" name="Contraseña" id="Contraseña" required>
-                    <label>Contraseña</label>
-                    <i class="bx  bxs-lock-alt"></i>
-                </div>
-                <button type="submit" class="btn animation" style="--i:3; --j:24">Iniciar sesión</button>
-                <div class="logreg-link animation" style="--i:4; --j:25">
-                    <p>No tiene una cuenta? <a href="#" class="register-link">Regístrese</a></p>
-                </div>
-            </form>
-        </div>
-        <div class="info-text login">
-            <h2 class="animation" style="--i:0; --j:20">Bienvenidos</h2>
-            <p class="animation" style="--i:1; --j:21">EBAS un aplicativo que te ayudara con la gestión de tus eventos</p>
-        </div>
-        <div class="form-box register">
-            <h2 class="animation" style="--i:17; --j:0">Registrarse</h2>
-            <form action="" method="post">
-                <div class="input-box animation" style="--i:18; --j:1">
-                    <input type="text" name="Nombres" required>
-                    <label>Nombres</label>
-                    <i class="bx bxs-user"></i>
-                </div>
-                <div class="input-box animation" style="--i:19; --j:2">
-                    <input type="email" name="Correo" required>
-                    <label>Correo</label>
-                    <i class="bx bxs-envelope"></i>
-                </div>
-                <div class="input-box animation" style="--i:20; --j:3">
-                    <input type="password" name="Contraseña" required>
-                    <label>Contraseña</label>
-                    <i class="bx  bxs-lock-alt"></i>
-                </div>
-                <button type="submit" class="btn animation" style="--i:21; --j:4">Registrar</button>
-                <div class="logreg-link animation" style="--i:22; --j:5">
-                    <p>Ya tiene una cuenta? <a href="#" class="login-link">Inicie sesión</a></p>
-                </div>
-            </form>
-        </div>
-        <div class="info-text register">
-            <h2 class="animation" style="--i:17; --j:0">Bienvenidos</h2>
-            <p class="animation" style="--i:18; --j:1">EBAS un aplicativo que te ayudara con la gestión de tus eventos</p>
-        </div>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form action="@Url.Action("Login","Login")" method="post">
+            <div class="input-group">
+                <label for="username">Correo</label>
+                <input type="email" id="Correo" name="Correo" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="Contraseña" name="Contraseña" required>
+            </div>
+            <button type="submit">Entrar</button>
+            <p class="signup-text">¿No tienes cuenta? <a href="@Url.Action("Index2","Login")">Regístrate aquí</a></p>
+        </form>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
-
-
 

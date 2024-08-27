@@ -16,6 +16,10 @@ namespace Ebasproyecto.Controllers
         {
             return View();
         }
+        public ActionResult Index2()
+        {
+            return View();
+        }
 
         private readonly MongoDBContext _context; 
 
@@ -26,6 +30,7 @@ namespace Ebasproyecto.Controllers
         [HttpPost]
         public ActionResult Login(string Correo, string Contraseña)
         {
+
             // Verificar que los parámetros no sean nulos o vacíos
             if (string.IsNullOrEmpty(Correo) || string.IsNullOrEmpty(Contraseña))
             {
@@ -41,7 +46,8 @@ namespace Ebasproyecto.Controllers
             {
                 // Si no se encontró el usuario, mostrar un mensaje de error
                 ViewBag.Message = "Usuario o contraseña incorrecta.";
-                return View();
+                return RedirectToAction("Index2", "Login");
+
             }
 
             // Verificar el tipo de usuario y redirigir según corresponda
@@ -63,14 +69,13 @@ namespace Ebasproyecto.Controllers
                 ViewBag.Message = "Tipo de usuario no reconocido.";
                 return View();
             }
+
+        
         }
 
+
         [HttpPost]
-        public ActionResult Registrar()
-        { 
-            return View(); 
-        }
-        public ActionResult Registrar(string Nombres, string Correo, string Contraseña)
+        public ActionResult Registrar(string Nombres,string Apellidos, string Correo, string Contraseña, string TipoUsuario)
         {
             var existeUser = _context.Users.Find(u => u.Correo == Correo).FirstOrDefault();
 
@@ -84,9 +89,10 @@ namespace Ebasproyecto.Controllers
             {
                 Id = ObjectId.GenerateNewId(),
                 Nombres = Nombres,
+                Apellidos = Apellidos,
                 Correo = Correo,
                 Contraseña = Contraseña,
-                TipoUsuario = "Aprendiz"
+                TipoUsuario = TipoUsuario
             };
 
             _context.Users.InsertOne(nuevoUsuario);
