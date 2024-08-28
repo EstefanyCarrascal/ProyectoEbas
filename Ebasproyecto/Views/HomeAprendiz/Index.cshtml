@@ -17,7 +17,8 @@
                 <th>Fecha del Evento</th>
                 <th>Hora Inicio</th>
                 <th>Hora Fin</th>
-               
+                <th></th>
+
 
 
 
@@ -34,7 +35,10 @@
                     <td>@evento.FechaEvento</td>
                     <td>@evento.HoraInicio</td>
                     <td>@evento.HoraFin</td>
-                    <button onclick="window.location.href='URL_DE_LA_VISTA';">Registrar Asistencia</button>
+                    <td>
+                        <a class="btn btn-secondary" href="@Url.Action("Firma","Firma")">Registrar Asistencia</a>
+                    </td>
+                   
 
                 </tr>
             }
