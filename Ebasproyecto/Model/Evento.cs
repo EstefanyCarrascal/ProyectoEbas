@@ -25,8 +25,11 @@ namespace Ebasproyecto.Model
         [BsonElement("NombreEvento")]
         public string NombreEvento { get; set; }
 
-        [BsonElement("Tipo")]
-        public string Tipo { get; set; } 
+        [BsonElement("HoraInicio")]
+        public string HoraInicio { get; set; }
+
+        [BsonElement("HoraFin")]
+        public string HoraFin { get; set; }
 
 
     }

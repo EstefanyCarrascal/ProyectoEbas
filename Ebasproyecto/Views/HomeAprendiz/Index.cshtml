@@ -15,8 +15,13 @@
                 <th>Descripción</th>
                 <th>Organizador</th>
                 <th>Fecha del Evento</th>
-                <th>Tipo</th>
-                
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+               
+
+
+
+
             </tr>
         </thead>
         <tbody>
@@ -27,7 +32,10 @@
                     <td>@evento.Descripcion</td>
                     <td>@evento.Organizador</td>
                     <td>@evento.FechaEvento</td>
-                    <td>@evento.Tipo</td>
+                    <td>@evento.HoraInicio</td>
+                    <td>@evento.HoraFin</td>
+                    <button onclick="window.location.href='URL_DE_LA_VISTA';">Registrar Asistencia</button>
+
                 </tr>
             }
         </tbody>

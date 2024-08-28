@@ -57,6 +57,8 @@
                     <th scope="col">Descripción</th>
                     <th scope="col">Organizador</th>
                     <th scope="col">Fecha Evento</th>
+                    <th scope="col">Hora Inicio</th>
+                    <th scope="col">Hora Fin</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -68,6 +70,8 @@
                         <td>@list.Descripcion</td>
                         <td>@list.Organizador</td>
                         <td>@list.FechaEvento</td>
+                        <td>@list.HoraInicio</td>
+                        <td>@list.HoraFin</td>
                         <td>
                             <button onclick="Editar(event, '@list.Id.ToString()', '@list.NombreEvento', '@list.Descripcion', '@list.Organizador', '@list.FechaEvento')">&#x270F; Editar</button>
                             <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>

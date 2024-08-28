@@ -1,27 +1,63 @@
-﻿
-@{
-    ViewBag.Title = "Firma";
-    Layout = "~/Views/Shared/_Layout A.cshtml";
+﻿@{
+    ViewBag.Title = "Firma Digital";
 }
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firma Digital</title>
-    <link rel="stylesheet" href="StyleSheeta.css">
-    <link rel="" href="StyleSheeta.css">
-</head>
-<body>
-    <h2>Firma Digital</h2>
-    <div class="signature-container">
-        <canvas id="signature-pad" width="400" height="200"></canvas>
-    </div>
-    <button id="clear-button">Limpiar</button>
-    <button id="save-button">Guardar Firma</button>
+<h3>Firma Digital</h3>
 
-    <script src="script.js"></script>
-</body>
-</html>
+<canvas id="canvas"></canvas>
+<br />
+<button id="clearButton">Limpiar</button>
+<button id="saveButton">Guardar Firma</button>
 
+<form id="firmaForm" method="post" action="@Url.Action("GuardarFirma", "Firma")" style="display:none;">
+    <input type="hidden" name="firmaData" id="firmaData">
+    <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId">
+    <input type="hidden" name="eventoId" value="@ViewBag.EventoId">
+</form>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    canvas.width = 600;
+    canvas.height = 300;
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    function startDrawing(e) {
+        isDrawing = true;
+        draw(e);
+    }
+
+    function draw(e) {
+        if (!isDrawing) return;
+
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+
+        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+
+    document.getElementById('clearButton').addEventListener('click', function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    document.getElementById('saveButton').addEventListener('click', function () {
+        const dataURL = canvas.toDataURL('image/png');
+        document.getElementById('firmaData').value = dataURL;
+        document.getElementById('firmaForm').submit();
+    });
+</script>

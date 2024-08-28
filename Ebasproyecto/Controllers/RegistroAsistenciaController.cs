@@ -65,6 +65,7 @@ namespace Ebasproyecto.Controllers
                     Id = parsedObjectId,
                     Fecha = Fecha,
                     Hora = Hora,
+                    Asistio= Asistio, 
                
                 };
 
