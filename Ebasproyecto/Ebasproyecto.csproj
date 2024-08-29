@@ -425,7 +425,6 @@
     <Content Include="Views\Fichas\Index.cshtml" />
     <Content Include="Views\ProgramaFormacion\Programa.cshtml" />
     <Content Include="Views\Evento\Evento.cshtml" />
-    <Content Include="Views\Asistencia\Asistencia.cshtml" />
     <Content Include="Views\RegistroAsistencia\Registro.cshtml" />
     <Content Include="Views\Shared\_Layout A.cshtml" />
     <Content Include="Views\HomeAprendiz\Index.cshtml" />
