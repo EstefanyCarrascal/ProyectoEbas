@@ -231,6 +231,7 @@
     <Compile Include="Controllers\PersonalAdministrativoController.cs" />
     <Compile Include="Controllers\ProgramaFormacionController.cs" />
     <Compile Include="Controllers\RegistroAsistenciaController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -382,6 +383,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\MongoDBContext\" />
+    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
