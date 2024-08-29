@@ -231,7 +231,6 @@
     <Compile Include="Controllers\PersonalAdministrativoController.cs" />
     <Compile Include="Controllers\ProgramaFormacionController.cs" />
     <Compile Include="Controllers\RegistroAsistenciaController.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -375,7 +374,6 @@
     <Content Include="Views\Evento\Evento.cshtml" />
     <Content Include="Views\Asistencia\Asistencia.cshtml" />
     <Content Include="Views\RegistroAsistencia\Registro.cshtml" />
-    <Content Include="Views\Shared\View.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Index2.cshtml" />
   </ItemGroup>
