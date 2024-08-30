@@ -50,6 +50,9 @@ namespace Ebasproyecto.Controllers
 
             }
 
+            Session["UserId"] = user.Id.ToString();
+
+
             // Verificar el tipo de usuario y redirigir según corresponda
             if (user.TipoUsuario == "Administrador")
             {
