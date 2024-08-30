@@ -12865,3 +12865,8 @@ body {
     font-size: 0.75rem;
     border-radius: 0.375rem !important;
 }
+
+
+.bg-purple {
+    background-color: #6f42c1; /* Color morado */
+}
