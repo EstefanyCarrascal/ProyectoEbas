@@ -223,9 +223,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AsistenciaController.cs" />
+    <Compile Include="Controllers\AprendicesController.cs" />
     <Compile Include="Controllers\EventoController.cs" />
     <Compile Include="Controllers\FichasController.cs" />
+    <Compile Include="Controllers\FirmaController.cs" />
+    <Compile Include="Controllers\HomeAprendizController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PersonalAdministrativoController.cs" />
@@ -237,6 +239,7 @@
     <Compile Include="Model\Asistencia.cs" />
     <Compile Include="Model\Evento.cs" />
     <Compile Include="Model\Fichas.cs" />
+    <Compile Include="Model\Firma.cs" />
     <Compile Include="Model\MongoDBContext.cs" />
     <Compile Include="Model\ProgramaFormacion.cs" />
     <Compile Include="Model\RegistroAsistencia.cs" />
@@ -376,10 +379,14 @@
     <Content Include="Views\RegistroAsistencia\Registro.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Index2.cshtml" />
+    <Content Include="Views\Aprendices\Aprendices.cshtml" />
+    <Content Include="Views\Shared\_Layout A.cshtml" />
+    <Content Include="Views\HomeAprendiz\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="Views\Firma\" />
     <Folder Include="Views\MongoDBContext\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>

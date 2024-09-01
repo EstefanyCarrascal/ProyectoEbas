@@ -1,0 +1,344 @@
+﻿@using Ebasproyecto.Model
+@model List<Usuarios>
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+
+    <button onclick="User(event)" id="openModalBtn">Crear</button>
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Documento</th>
+                    <th scope="col">Tipo de documento</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Sexo</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Estado Civil</th>
+                    <th scope="col">Municipio</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Tipo de población</th>
+                    <th scope="col">Tipo de usuario</th>
+                    <th scope="col">Contraseña</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            @foreach (var list in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>@list.Nombres</td>
+                        <td>@list.Apellidos</td>
+                        <td>@list.Documento</td>
+                        <td>@list.TipoDocumento</td>
+                        <td>@list.Correo</td>
+                        <td>@list.Telefono</td>
+                        <td>@list.Sexo</td>
+                        <td>@list.Edad</td>
+                        <td>@list.EstadoCivil</td>
+                        <td>@list.Municipio</td>
+                        <td>@list.Direccion</td>
+                        <td>@list.TipoPoblacion</td>
+                        <td>@list.TipoUsuario</td>
+                        <td>@list.Contraseña</td>
+                        <td>
+                            <button onclick="Editar(event, '@list.Id.ToString()', '@list.Nombres', '@list.Apellidos', '@list.Documento', '@list.TipoDocumento', '@list.Correo', '@list.Sexo', '@list.Edad', '@list.Municipio', '@list.Direccion', '@list.EstadoCivil', '@list.Telefono', '@list.TipoPoblacion', '@list.TipoUsuario', '@list.Contraseña')">&#x270F; Editar</button>
+                            <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+
+    <!-- Modal para Crear Nuevo Personal Administrativo -->
+    <div id="CrearAprendices" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCrearModalBtn">&times;</span>
+            <h4>Crear Nuevo Aprendiz</h4>
+            <form action="@Url.Action("Crear", "Aprendices")" method="post">
+                <div class="mb-3">
+                    <label for="Nombres" class="form-label">Nombres</label>
+                    <input id="Nombres" type="text" name="Nombres" class="form-control" placeholder="Ingrese sus nombres" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Apellidos" class="form-label">Apellidos</label>
+                    <input id="Apellidos" type="text" name="Apellidos" class="form-control" placeholder="Ingrese sus apellidos" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Documento" class="form-label">Documento</label>
+                    <input id="Documento" type="text" name="Documento" class="form-control" placeholder="Ingrese su documento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="TipoDocumento" class="form-label">Tipo de documento</label>
+                    <select id="TipoDocumento" name="TipoDocumento" class="form-control" placeholder="Seleccione su tipo de documento">
+                        <option value="TI">TI</option>
+                        <option value="CC">CC</option>
+                        <option value="CE">CE</option>
+                        <option value="PEP">PEP</option>
+                        <option value="PPT">PPT</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="Correo" class="form-label">Correo</label>
+                    <input id="Correo" type="text" name="Correo" class="form-control" placeholder="Ingrese su correo" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Telefono" class="form-label">Teléfono</label>
+                    <input id="Telefono" type="text" name="Telefono" class="form-control" placeholder="Ingrese su teléfono" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Sexo" class="form-label">Sexo</label>
+                    <input id="Sexo" type="text" name="Sexo" class="form-control" placeholder="Ingrese su sexo" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Edad" class="form-label">Edad</label>
+                    <input id="Edad" type="text" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EstadoCivil" class="form-label">Estado civil</label>
+                    <input id="EstadoCivil" type="text" name="EstadoCivil" class="form-control" placeholder="Ingrese su Estado civil" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Municipio" class="form-label">Municipio</label>
+                    <input id="Municipio" type="text" name="Municipio" class="form-control" placeholder="Ingrese el municipio donde vive " required />
+                </div>
+                <div class="mb-3">
+                    <label for="Direccion" class="form-label">Dirección</label>
+                    <input id="Direccion" type="text" name="Direccion" class="form-control" placeholder="Ingrese su dirección" required />
+                </div>
+                <div class="mb-3">
+                    <label for="TipoPoblacion" class="form-label">Tipo de población</label>
+                    <input id="TipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su Tipo de población " required />
+                </div>
+                <div class="mb-3">
+                    <label for="TipoUsuario" class="form-label">Tipo de usuario</label>
+                    <input id="TipoUsuario" type="text" name="TipoUsuario" class="form-control" placeholder="Ingrese su Tipo de usuario" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Contraseña" class="form-label">Tipo de contraseña</label>
+                    <input id="Contraseña" type="password" name="Contraseña" class="form-control" placeholder="Ingrese su contraseña" required />
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-secondary btn-block">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Editar Personal Administrativo -->
+    <div id="Editar" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeEditModalBtn">&times;</span>
+            <h4>Editar Aprendices</h4>
+            <form action="@Url.Action("Editar", "Aprendices")" method="post">
+                <input type="hidden" id="EditarId" name="objectId" />
+                <div class="mb-3">
+                    <label for="EditarNombres" class="form-label">Nombres</label>
+                    <input id="EditarNombres" type="text" name="Nombres" class="form-control" placeholder="Ingrese sus nombres" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarApellidos" class="form-label">Apellidos</label>
+                    <input id="EditarApellidos" type="text" name="Apellidos" class="form-control" placeholder="Ingrese sus apellidos" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarDocumento" class="form-label">Documento</label>
+                    <input id="EditarDocumento" type="text" name="Documento" class="form-control" placeholder="Ingrese su documento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTipoDocumento" class="form-label">Tipo de documento</label>
+                    <select id="EditarTipoDocumento" name="TipoDocumento" class="form-control" placeholder="Seleccione su tipo de documento">
+                        <option value="TI">TI</option>
+                        <option value="CC">CC</option>
+                        <option value="CE">CE</option>
+                        <option value="PEP">PEP</option>
+                        <option value="PPT">PPT</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="EditarCorreo" class="form-label">Correo</label>
+                    <input id="EditarCorreo" type="text" name="Correo" class="form-control" placeholder="Ingrese su correo" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTelefono" class="form-label">Teléfono</label>
+                    <input id="EditarTelefono" type="text" name="Telefono" class="form-control" placeholder="Ingrese su teléfono" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarSexo" class="form-label">Sexo</label>
+                    <input id="EditarSexo" type="text" name="Sexo" class="form-control" placeholder="Ingrese su sexo" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarEdad" class="form-label">Edad</label>
+                    <input id="EditarEdad" type="text" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarEstadoCivil" class="form-label">Estado civil</label>
+                    <input id="EditarEstadoCivil" type="text" name="EstadoCivil" class="form-control" placeholder="Ingrese su Estado civil" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarMunicipio" class="form-label">Municipio</label>
+                    <input id="EditarMunicipio" type="text" name="Municipio" class="form-control" placeholder="Ingrese el municipio donde vive " required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarDireccion" class="form-label">Dirección</label>
+                    <input id="EditarDireccion" type="text" name="Direccion" class="form-control" placeholder="Ingrese su dirección" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTipoPoblacion" class="form-label">Tipo de población</label>
+                    <input id="EditarTipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su Tipo de población " required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTipoUsuario" class="form-label">Tipo de usuario</label>
+                    <input id="EditarTipoUsuario" type="text" name="TipoUsuario" class="form-control" placeholder="Ingrese su Tipo de usuario" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarContraseña" class="form-label">Tipo de contraseña</label>
+                    <input id="EditarContraseña" type="password" name="Contraseña" class="form-control" placeholder="Ingrese su contraseña" required />
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-secondary btn-block">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Confirmación de Eliminación -->
+    <div id="Eliminar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmación de Eliminación</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="Cerrar()">&times;</button>
+            </div>
+            <form action="@Url.Action("Eliminar", "Aprendices")" method="post">
+                <input type="hidden" id="deleteId" name="objectId" />
+                <p>¿Estás seguro de que quieres eliminar este Aprendiz?</p>
+                <button type="submit" class="btn btn-danger">Sí</button>
+                <button type="button" class="btn btn-secondary" onclick="Cerrar()">No</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // Modal para crear personal administrativo
+        var createModal = document.getElementById("CrearAprendices");
+        var openCreateModalBtn = document.getElementById("openModalBtn");
+        var closeCreateModalBtn = document.getElementById("closeCrearModalBtn");
+
+        openCreateModalBtn.onclick = function () {
+            createModal.style.display = "block";
+        }
+
+        closeCreateModalBtn.onclick = function () {
+            createModal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == createModal) {
+                createModal.style.display = "none";
+            }
+        }
+
+        // Modal para editar personal administrativo
+        var editModal = document.getElementById("Editar");
+        var closeEditModalBtn = document.getElementById("closeEditModalBtn");
+
+        function Editar(event, id, Nombres, Apellidos, Documento, TipoDocumento, Correo, Sexo, Edad, Municipio, Direccion, EstadoCivil, Telefono, TipoPoblacion, TipoUsuario, Contraseña) {
+            event.preventDefault();
+            document.getElementById("EditarId").value = id;
+            document.getElementById("EditarNombres").value = Nombres;
+            document.getElementById("EditarApellidos").value = Apellidos;
+            document.getElementById("EditarDocumento").value = Documento;
+            document.getElementById("EditarTipoDocumento").value = TipoDocumento;
+            document.getElementById("EditarCorreo").value = Correo;
+            document.getElementById("EditarSexo").value = Sexo;
+            document.getElementById("EditarEdad").value = Edad;
+            document.getElementById("EditarMunicipio").value = Municipio;
+            document.getElementById("EditarDireccion").value = Direccion;
+            document.getElementById("EditarEstadoCivil").value = EstadoCivil;
+            document.getElementById("EditarTelefono").value = Telefono;
+            document.getElementById("EditarTipoPoblacion").value = TipoPoblacion;
+            document.getElementById("EditarTipoUsuario").value = TipoUsuario;
+            document.getElementById("EditarContraseña").value = Contraseña;
+            editModal.style.display = "block";
+        }
+
+        closeEditModalBtn.onclick = function () {
+            editModal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == editModal) {
+                editModal.style.display = "none";
+            }
+        }
+
+        // Modal para eliminar personal administrativo
+        var deleteModal = document.getElementById("Eliminar");
+
+        function Eliminar(event, id) {
+            event.preventDefault();
+            document.getElementById("deleteId").value = id;
+            deleteModal.style.display = "block";
+        }
+
+        function Cerrar() {
+            deleteModal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == deleteModal) {
+                deleteModal.style.display = "none";
+            }
+        } 
+
+    </script>
+</body>
+</html>

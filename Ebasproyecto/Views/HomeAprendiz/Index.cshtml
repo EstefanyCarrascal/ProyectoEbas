@@ -1,0 +1,47 @@
+﻿
+@model List<Ebasproyecto.Model.Evento>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout A.cshtml";
+}
+
+<h2>Eventos </h2>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre Evento</th>
+                <th>Descripción</th>
+                <th>Organizador</th>
+                <th>Fecha del Evento</th>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
+                <th></th>
+
+
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evento in Model)
+            {
+                <tr>
+                    <td>@evento.NombreEvento</td>
+                    <td>@evento.Descripcion</td>
+                    <td>@evento.Organizador</td>
+                    <td>@evento.FechaEvento</td>
+                    <td>@evento.HoraInicio</td>
+                    <td>@evento.HoraFin</td>
+                    <td>
+                        <a class="btn btn-secondary" href="@Url.Action("Firma","Firma")">Registrar Asistencia</a>
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
