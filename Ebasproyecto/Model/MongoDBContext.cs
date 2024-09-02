@@ -28,8 +28,9 @@ namespace Ebasproyecto.Model
         {
             get { return _database.GetCollection<Usuarios>("Usuarios"); }
         }
-
-
-        
+        public IMongoCollection<Evento> Evento
+        {
+            get { return _database.GetCollection<Evento>("Evento"); }
+        }
     }
 }

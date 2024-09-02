@@ -6,19 +6,25 @@ using Ebasproyecto.Model;
 
 namespace Ebasproyecto.Controllers
 {
+
     public class HomeController : Controller
     {
+        private readonly MongoDBContext _context;
         private readonly MongoClient _client;
         private readonly IMongoDatabase _database;
 
         public HomeController()
         {
+            _context = new MongoDBContext();
             _client = new MongoClient("mongodb://localhost:27017/");
             _database = _client.GetDatabase("Ebas");
         }
 
         public ActionResult Index()
         {
+            var totaleventos = _context.Evento.CountDocuments(_ => true);
+
+            ViewBag.totalevento = totaleventos;
             return View();
         }
 

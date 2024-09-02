@@ -17,7 +17,7 @@ namespace Ebasproyecto.Controllers
         {
             var database = cn.GetDatabase("Ebas");
             var collection = database.GetCollection<Usuarios>("Usuarios");
-            List<Usuarios> List = collection.Find(d => true).ToList();
+            List<Usuarios> List = collection.Find(d => d.TipoUsuario == "PersonalAdministrativo").ToList(); // Filtrar por TipoUsuario = "Administrativo"
             return View(List);
         }
 
