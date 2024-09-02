@@ -36,25 +36,30 @@ namespace Ebasproyecto.Controllers
         }
 
 
-
         [HttpPost]
         public ActionResult Editar(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
         {
             try
             {
-                // Obtener el ID del usuario desde la sesión
-                var userId = Session["UserId"]?.ToString();
+                // Obtener el usuario autenticado desde la sesión
+                var user = Session["Usuario"] as Usuarios;
 
-                if (string.IsNullOrEmpty(userId) || !ObjectId.TryParse(userId, out var parsedObjectId))
+                if (user == null)
                 {
-                    throw new ArgumentException("Invalid User Id format or User is not authenticated.");
+                    return RedirectToAction("Index", "Login");
+                }
+                else
+                {
+                    return View(user);
                 }
 
+                // Conectar con la base de datos
                 var database = cn.GetDatabase("Ebas");
                 var collection = database.GetCollection<Usuarios>("Usuarios");
 
+
                 // Encontrar el usuario en la base de datos
-                var usuario = collection.Find(u => u.Id == parsedObjectId).FirstOrDefault();
+                var usuario = collection.Find(u => u.Id == user.Id).FirstOrDefault();
                 if (usuario == null)
                 {
                     throw new Exception("Usuario no encontrado.");
@@ -76,7 +81,10 @@ namespace Ebasproyecto.Controllers
                 usuario.TipoUsuario = TipoUsuario;
                 usuario.Contraseña = Contraseña;
 
-                collection.ReplaceOne(d => d.Id == parsedObjectId, usuario);
+                collection.ReplaceOne(d => d.Id == user.Id, usuario);
+
+                // Actualizar los datos en la sesión
+                Session["Usuario"] = usuario;
 
                 return RedirectToAction("Perfil"); // Redirigir al perfil del usuario
             }
@@ -86,6 +94,19 @@ namespace Ebasproyecto.Controllers
                 return RedirectToAction("Perfil", new { mensaje = ex.Message });
             }
         }
+
+        [HttpGet]
+        public ActionResult CargarDatosEditar()
+        {
+            var user = Session["Usuario"] as Usuarios;
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            return PartialView("_EditarPerfilModal", user); // Devolver la vista parcial con los datos del usuario
+        }
+
 
     }
 

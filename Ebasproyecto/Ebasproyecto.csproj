@@ -382,6 +382,7 @@
     <Content Include="Views\Aprendices\Aprendices.cshtml" />
     <Content Include="Views\Shared\_Layout A.cshtml" />
     <Content Include="Views\HomeAprendiz\Index.cshtml" />
+    <Content Include="Views\HomeAprendiz\IndexAprendiz.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

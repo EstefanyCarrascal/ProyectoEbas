@@ -35,7 +35,7 @@ namespace Ebasproyecto.Controllers
             if (string.IsNullOrEmpty(Correo) || string.IsNullOrEmpty(Contraseña))
             {
                 ViewBag.Message = "Por favor, ingrese correo y contraseña.";
-                return View();
+                return View("Index");
             }
 
             // Buscar al usuario en la base de datos
@@ -46,28 +46,30 @@ namespace Ebasproyecto.Controllers
             {
                 // Si no se encontró el usuario, mostrar un mensaje de error
                 ViewBag.Message = "Usuario o contraseña incorrecta.";
-                return RedirectToAction("Index2", "Login");
+                return View("Index2");
 
             }
 
-            // Verificar el tipo de usuario y redirigir según corresponda
-            if (user.TipoUsuario == "Administrador")
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            Session["Usuario"] = user;
+
+            //// Verificar el tipo de usuario y redirigir según corresponda
+            //if (user.TipoUsuario == "Administrador")
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
             if (user.TipoUsuario == "PersonalAdministrativo")
             {
                 return RedirectToAction("Index", "Home");
             }
             if (user.TipoUsuario == "Aprendiz")
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("IndexAprendiz", "HomeAprendiz");
             }
             else
             {
                 // Si el tipo de usuario no coincide con ningún caso, mostrar un mensaje de error
                 ViewBag.Message = "Tipo de usuario no reconocido.";
-                return View();
+                return View("Index");
             }
 
         
