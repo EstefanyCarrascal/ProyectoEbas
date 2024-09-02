@@ -48,13 +48,13 @@ namespace Ebasproyecto.Controllers
                 };
 
                 collection.InsertOne(Usuarios);
-                return RedirectToAction("user"); // Corrección en el redireccionamiento
+                return RedirectToAction("Aprendices"); // Corrección en el redireccionamiento
             }
             catch (Exception ex)
             {
                 // Manejo de excepción, opcionalmente puedes mostrar un mensaje de error
                 Console.WriteLine($"Error: {ex.Message}");
-                return RedirectToAction("user", new { mensaje = "Error al insertar la sala." });
+                return RedirectToAction("Aprendices", new { mensaje = "Error al insertar la sala." });
             }
         }
 
