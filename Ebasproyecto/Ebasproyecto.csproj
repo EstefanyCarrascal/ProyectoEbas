@@ -379,11 +379,11 @@
     <Content Include="Views\Aprendices\Aprendices.cshtml" />
     <Content Include="Views\Shared\_Layout A.cshtml" />
     <Content Include="Views\HomeAprendiz\Index.cshtml" />
+    <Content Include="Views\Firma\Firma.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Default\" />
-    <Folder Include="Views\Firma\" />
     <Folder Include="Views\MongoDBContext\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>

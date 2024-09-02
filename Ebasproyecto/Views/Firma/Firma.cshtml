@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Firma Digital";
+}
+
+<h3>Firma Digital</h3>
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 20px;">
+    <div style="border: 1px solid #000; width: 600px; height: 300px; display: flex; justify-content: center; align-items: center;">
+        <canvas id="canvas" style="border: 1px solid #ddd;"></canvas>
+    </div>
+    <br />
+    <div>
+        <button id="clearButton">Limpiar</button>
+        <button id="saveButton">Guardar Firma</button>
+    </div>
+</div>
+
+<form id="firmaForm" method="post" action="@Url.Action("GuardarFirma", "Firma")" style="display:none;">
+    <input type="hidden" name="firmaData" id="firmaData">
+    <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId">
+    <input type="hidden" name="eventoId" value="@ViewBag.EventoId">
+</form>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+
+    canvas.width = 600;
+    canvas.height = 300;
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    function startDrawing(e) {
+        isDrawing = true;
+        draw(e);
+    }
+
+    function draw(e) {
+        if (!isDrawing) return;
+
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = '#000';
+
+        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+
+    document.getElementById('clearButton').addEventListener('click', function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    document.getElementById('saveButton').addEventListener('click', function () {
+        const dataURL = canvas.toDataURL('image/png');
+        document.getElementById('firmaData').value = dataURL;
+        document.getElementById('firmaForm').submit();
+    });
+</script>
