@@ -1,18 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using MongoDB.Driver;
-using MongoDB.Bson; 
 using System.Web.Mvc;
 using Ebasproyecto.Model;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace Ebasproyecto.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly MongoDBContext _context;
+
+        public LoginController()
+        {
+            _context = new MongoDBContext();
+        }
+
         // GET: Login
-        public ActionResult Index()
+        public ActionResult Index1()
         {
             return View();
         }
@@ -21,21 +26,14 @@ namespace Ebasproyecto.Controllers
             return View();
         }
 
-        private readonly MongoDBContext _context; 
-
-        public LoginController()
-        {
-            _context = new MongoDBContext(); 
-        }
         [HttpPost]
         public ActionResult Login(string Correo, string Contraseña)
         {
-
             // Verificar que los parámetros no sean nulos o vacíos
             if (string.IsNullOrEmpty(Correo) || string.IsNullOrEmpty(Contraseña))
             {
                 ViewBag.Message = "Por favor, ingrese correo y contraseña.";
-                return View("Index");
+                return View("Index1");
             }
 
             // Buscar al usuario en la base de datos
@@ -46,45 +44,38 @@ namespace Ebasproyecto.Controllers
             {
                 // Si no se encontró el usuario, mostrar un mensaje de error
                 ViewBag.Message = "Usuario o contraseña incorrecta.";
-                return View("Index2");
-
+                return View("Index1");
             }
 
+            // Guardar la información del usuario en la sesión
             Session["Usuario"] = user;
 
-            //// Verificar el tipo de usuario y redirigir según corresponda
-            //if (user.TipoUsuario == "Administrador")
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
+            // Redirigir según el tipo de usuario
             if (user.TipoUsuario == "PersonalAdministrativo")
             {
                 return RedirectToAction("Index", "Home");
             }
             if (user.TipoUsuario == "Aprendiz")
             {
-                return RedirectToAction("IndexAprendiz", "HomeAprendiz");
+                return RedirectToAction("Index", "HomeAprendiz");
             }
             else
             {
                 // Si el tipo de usuario no coincide con ningún caso, mostrar un mensaje de error
                 ViewBag.Message = "Tipo de usuario no reconocido.";
-                return View("Index");
+                return View("Index1");
             }
-
-        
         }
 
-
         [HttpPost]
-        public ActionResult Registrar(string Nombres,string Apellidos, string Correo, string Contraseña, string TipoUsuario)
+        public ActionResult Registrar(string Nombres, string Apellidos, string Correo, string Contraseña, string TipoUsuario)
         {
             var existeUser = _context.Users.Find(u => u.Correo == Correo).FirstOrDefault();
 
             if (existeUser != null)
             {
                 ViewBag.Message = "Este correo ya está registrado.";
-                return View();
+                return View("Index1");
             }
 
             var nuevoUsuario = new Usuarios
@@ -99,7 +90,7 @@ namespace Ebasproyecto.Controllers
 
             _context.Users.InsertOne(nuevoUsuario);
 
-            return RedirectToAction("Index", "Login");
-
-    }   }
+            return RedirectToAction("Index1", "Login");
+        }
+    }
 }

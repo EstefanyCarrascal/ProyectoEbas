@@ -1,7 +1,7 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,19 +13,26 @@
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <form action="@Url.Action("Login","Login")" method="post">
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.Message
+            </div>
+        }
+
+        <form action="@Url.Action("Login", "Login")" method="post">
             <div class="input-group">
-                <label for="username">Correo</label>
+                <label for="Correo">Correo</label>
                 <input type="email" id="Correo" name="Correo" required>
             </div>
             <div class="input-group">
-                <label for="password">Contraseña</label>
+                <label for="Contraseña">Contraseña</label>
                 <input type="password" id="Contraseña" name="Contraseña" required>
             </div>
             <button type="submit">Entrar</button>
-            <p class="signup-text">¿No tienes cuenta? <a href="@Url.Action("Index2","Login")">Regístrate aquí</a></p>
+            <p class="signup-text">¿No tienes cuenta? <a href="@Url.Action("Index2", "Login")">Regístrate aquí</a></p>
         </form>
     </div>
 </body>
 </html>
-

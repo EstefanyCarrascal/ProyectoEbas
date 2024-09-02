@@ -1,65 +1,56 @@
-﻿using MongoDB.Bson;
+﻿using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using Ebasproyecto.Model;
 
 namespace Ebasproyecto.Controllers
 {
     public class HomeController : Controller
     {
-        MongoClient cn = new MongoClient("mongodb://localhost:27017/");
+        private readonly MongoClient _client;
+        private readonly IMongoDatabase _database;
+
+        public HomeController()
+        {
+            _client = new MongoClient("mongodb://localhost:27017/");
+            _database = _client.GetDatabase("Ebas");
+        }
 
         public ActionResult Index()
         {
-            var database = cn.GetDatabase("Ebas");
-            var collection = database.GetCollection<Usuarios>("Usuarios");
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
 
         [HttpPost]
-        public ActionResult Editar(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
+        public ActionResult Editar(
+            string Nombres,
+            string Apellidos,
+            string Documento,
+            string TipoDocumento,
+            string Correo,
+            string Sexo,
+            string Edad,
+            string Municipio,
+            string Direccion,
+            string EstadoCivil,
+            string Telefono,
+            string TipoPoblacion,
+            string TipoUsuario,
+            string Contraseña)
         {
             try
             {
-                // Obtener el usuario autenticado desde la sesión
                 var user = Session["Usuario"] as Usuarios;
 
                 if (user == null)
                 {
                     return RedirectToAction("Index", "Login");
                 }
-                else
-                {
-                    return View(user);
-                }
 
-                // Conectar con la base de datos
-                var database = cn.GetDatabase("Ebas");
-                var collection = database.GetCollection<Usuarios>("Usuarios");
-
-
-                // Encontrar el usuario en la base de datos
+                var collection = _database.GetCollection<Usuarios>("Usuarios");
                 var usuario = collection.Find(u => u.Id == user.Id).FirstOrDefault();
+
                 if (usuario == null)
                 {
                     throw new Exception("Usuario no encontrado.");
@@ -86,29 +77,38 @@ namespace Ebasproyecto.Controllers
                 // Actualizar los datos en la sesión
                 Session["Usuario"] = usuario;
 
-                return RedirectToAction("Perfil"); // Redirigir al perfil del usuario
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                return RedirectToAction("Perfil", new { mensaje = ex.Message });
+                // Manejo de error: Redirigir a la vista Index con el mensaje de error
+                return RedirectToAction("Index", new { mensaje = ex.Message });
             }
         }
 
         [HttpGet]
-        public ActionResult CargarDatosEditar()
+        public JsonResult CargarDatosEditar()
         {
-            var user = Session["Usuario"] as Usuarios;
-            if (user == null)
+            try
             {
-                return RedirectToAction("Index", "Login");
+                var usuario = ObtenerUsuarioLogueado();
+                if (usuario == null)
+                {
+                    return Json(new { success = false, message = "Usuario no encontrado." }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { success = true, data = usuario }, JsonRequestBehavior.AllowGet);
             }
-
-            return PartialView("_EditarPerfilModal", user); // Devolver la vista parcial con los datos del usuario
+            catch (Exception ex)
+            {
+                // Log the exception if needed
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
-
-
+        private Usuarios ObtenerUsuarioLogueado()
+        {
+            // Asumiendo que tienes la información del usuario en la sesión.
+            return Session["Usuario"] as Usuarios;
+        }
     }
-
 }
-

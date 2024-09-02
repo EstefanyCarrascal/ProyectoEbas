@@ -9,6 +9,47 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     @Styles.Render("~/Content/css")
     @*@Scripts.Render("~/bundles/modernizr")*@
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+            }
+    </style>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -28,7 +69,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Editar Perfil</a></li>
+                    <li><a class="dropdown-item" href="#" id="editProfileLink">Editar Perfil</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="#!">Cerrar Sesión</a></li>
                 </ul>
@@ -125,26 +166,133 @@
             </footer>
         </div>
     </div>
+    <div id="Editar" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeEditModalBtn">&times;</span>
+            <h4>Editar Perfil</h4>
+            <form action="@Url.Action("Editar", "Home")" method="post">
+                <input type="hidden" id="EditarId" name="Id" value="" />
+                <div class="mb-3">
+                    <label for="EditarNombres" class="form-label">Nombres</label>
+                    <input id="EditarNombres" type="text" name="Nombres" class="form-control" placeholder="Ingrese sus nombres" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarApellidos" class="form-label">Apellidos</label>
+                    <input id="EditarApellidos" type="text" name="Apellidos" class="form-control" placeholder="Ingrese sus apellidos" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarDocumento" class="form-label">Documento</label>
+                    <input id="EditarDocumento" type="text" name="Documento" class="form-control" placeholder="Ingrese su documento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTipoDocumento" class="form-label">Tipo de documento</label>
+                    <select id="EditarTipoDocumento" name="TipoDocumento" class="form-control" placeholder="Seleccione su tipo de documento">
+                        <option value="TI">TI</option>
+                        <option value="CC">CC</option>
+                        <option value="CE">CE</option>
+                        <option value="PEP">PEP</option>
+                        <option value="PPT">PPT</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="EditarCorreo" class="form-label">Correo</label>
+                    <input id="EditarCorreo" type="text" name="Correo" class="form-control" placeholder="Ingrese su correo" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTelefono" class="form-label">Teléfono</label>
+                    <input id="EditarTelefono" type="text" name="Telefono" class="form-control" placeholder="Ingrese su teléfono" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarSexo" class="form-label">Sexo</label>
+                    <input id="EditarSexo" type="text" name="Sexo" class="form-control" placeholder="Ingrese su sexo" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarEdad" class="form-label">Edad</label>
+                    <input id="EditarEdad" type="text" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarEstadoCivil" class="form-label">Estado civil</label>
+                    <input id="EditarEstadoCivil" type="text" name="EstadoCivil" class="form-control" placeholder="Ingrese su estado civil" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarMunicipio" class="form-label">Municipio</label>
+                    <input id="EditarMunicipio" type="text" name="Municipio" class="form-control" placeholder="Ingrese su municipio" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarDireccion" class="form-label">Dirección</label>
+                    <input id="EditarDireccion" type="text" name="Direccion" class="form-control" placeholder="Ingrese su dirección" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTipoPoblacion" class="form-label">Tipo de población</label>
+                    <input id="EditarTipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su tipo de población" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarTipoUsuario" class="form-label">Tipo de usuario</label>
+                    <select id="EditarTipoUsuario" name="TipoUsuario" class="form-control" placeholder="Seleccione su tipo de usuario">
+                        <option value="PersonalAdministrativo">Personal Administrativo</option>
+                        <option value="Aprendiz">Aprendiz</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="EditarContraseña" class="form-label">Contraseña</label>
+                    <input id="EditarContraseña" type="password" name="Contraseña" class="form-control" placeholder="Ingrese su contraseña" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+        </div>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-    @*<li>@Html.ActionLink("Gestionar Evento", "Evento", "Evento", new { area = "" }, new { @class = "nav-link" })</li>
-        <li>@Html.ActionLink("Gestionar Asistencia", "Asistencia", "Asistencia", new { area = "" }, new { @class = "nav-link" })</li>
-        <li>@Html.ActionLink("Gestionar Fichas", "Index", "Fichas", new { area = "" }, new { @class = "nav-link" })</li>
-        <li>@Html.ActionLink("Gestionar Personal Administrativo", "user", "PersonalAdministrativo", new { area = "" }, new { @class = "nav-link" })</li>
-        <li>@Html.ActionLink("Gestionar Programa de Formación", "Programa", "ProgramaFormacion", new { area = "" }, new { @class = "nav-link" })</li>
-        <li>@Html.ActionLink("Editar Perfil", "#", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/complementos")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <script>
+   document.getElementById('editProfileLink').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: '@Url.Action("CargarDatosEditar", "Home")',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            if (response.success) {
+                // Llena los campos del modal con los datos
+                var data = response.data;
+                document.getElementById('EditarNombres').value = data.Nombres;
+                document.getElementById('EditarApellidos').value = data.Apellidos;
+                document.getElementById('EditarDocumento').value = data.Documento;
+                document.getElementById('EditarDocumento').value = data.Documento;
+                document.getElementById('EditarTelefono').value = data.Telefono;
+                document.getElementById('EditarCorreo').value = data.Correo;
+                document.getElementById('EditarSexo').value = data.Sexo;
+                document.getElementById('EditarEdad').value = data.Edad;
+                document.getElementById('EditarMunicipio').value = data.Municipio;
+                document.getElementById('EditarDireccion').value = data.Direccion;
+                document.getElementById('EditarEstadoCivil').value = data.EstadoCivil;
+                document.getElementById('EditarTipoDocumento').value = data.TipoDocumento;
+                document.getElementById('EditarTipoPoblacion').value = data.TipoPoblacion;
+                document.getElementById('EditarTipoUsuario').value = data.TipoUsuario;
+                document.getElementById('EditarContraseña').value = data.Contraseña;
+                document.getElementById('Editar').style.display = 'flex';
+            } else {
+                alert('Error: ' + response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error al cargar datos:', status, error);
+            alert('Error al cargar los datos de perfil.');
+        }
+    });
+});
+
+document.getElementById('closeEditModalBtn').addEventListener('click', function () {
+    document.getElementById('Editar').style.display = 'none';
+});
+
+window.onclick = function (event) {
+    if (event.target == document.getElementById('Editar')) {
+        document.getElementById('Editar').style.display = 'none';
+    }
+};
+
+    </script>
 </body>
 </html>
