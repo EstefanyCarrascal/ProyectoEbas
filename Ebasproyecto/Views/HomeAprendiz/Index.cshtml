@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout A.cshtml";
 }
 
-<h2>Eventos </h2>
+<h2>Aprendiz </h2>
 
 <div class="table-responsive">
     <table class="table table-striped">
@@ -31,7 +31,7 @@
                     <td>@evento.HoraInicio</td>
                     <td>@evento.HoraFin</td>
                     <td>
-                        <a class="btn btn-secondary" href="@Url.Action("Firma","Firma")">Registrar Asistencia</a>
+                        <a class="btn btn-secondary" href="@Url.Action("Firma","Firma", new {id = evento.Id})">Registrar Asistencia</a>
                     </td>
                 </tr>
              }

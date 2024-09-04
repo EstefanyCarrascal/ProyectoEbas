@@ -1,9 +1,75 @@
-﻿@{
+﻿@model Ebasproyecto.Model.Evento
+@{
     ViewBag.Title = "Firma Digital";
     Layout = "~/Views/Shared/_Layout A.cshtml";
 }
 
 <h3>Firma Digital</h3>
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
+    <h4>Información del Usuario</h4>
+    <table class="table table-bordered" style="width: 80%;">
+        <tbody>
+            <tr>
+                <th>Nombres</th>
+                <td>@ViewBag.Nombres</td>
+            </tr>
+            <tr>
+                <th>Apellidos</th>
+                <td>@ViewBag.Apellidos</td>
+            </tr>
+            <tr>
+                <th>Documento</th>
+                <td>@ViewBag.Documento</td>
+            </tr>
+            <tr>
+                <th>Teléfono</th>
+                <td>@ViewBag.Telefono</td>
+            </tr>
+            <tr>
+                <th>Correo</th>
+                <td>@ViewBag.Correo</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>@ViewBag.Sexo</td>
+            </tr>
+            <tr>
+                <th>Edad</th>
+                <td>@ViewBag.Edad</td>
+            </tr>
+            <tr>
+                <th>Municipio</th>
+                <td>@ViewBag.Municipio</td>
+            </tr>
+            <tr>
+                <th>Dirección</th>
+                <td>@ViewBag.Direccion</td>
+            </tr>
+            <tr>
+                <th>Estado Civil</th>
+                <td>@ViewBag.EstadoCivil</td>
+            </tr>
+            <tr>
+                <th>Tipo de Documento</th>
+                <td>@ViewBag.TipoDocumento</td>
+            </tr>
+            <tr>
+                <th>Tipo de Población</th>
+                <td>@ViewBag.TipoPoblacion</td>
+            </tr>
+            <tr>
+                <th>Tipo de Usuario</th>
+                <td>@ViewBag.TipoUsuario</td>
+            </tr>
+            <tr>
+                <th>Nombre del Evento</th>
+                <td>@ViewBag.EventoNombre</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 20px;">
     <div style="border: 1px solid #000; width: 600px; height: 300px; display: flex; justify-content: center; align-items: center;">

@@ -11,6 +11,8 @@ namespace Ebasproyecto.Controllers
     {
         private readonly IMongoCollection<Firma> _firmaCollection;
         private readonly IMongoCollection<Usuarios> _usuarioCollection;
+        private readonly IMongoCollection<Evento> _evento;
+        private readonly MongoDBContext _context;
 
         // Constructor sin parámetros
         public FirmaController()
@@ -19,6 +21,7 @@ namespace Ebasproyecto.Controllers
             var database = mongoClient.GetDatabase("Ebas");
             _firmaCollection = database.GetCollection<Firma>("Firma");
             _usuarioCollection = database.GetCollection<Usuarios>("Usuarios");
+            _context = new MongoDBContext();
         }
 
         // Constructor con parámetros 
@@ -27,6 +30,7 @@ namespace Ebasproyecto.Controllers
             var database = mongoClient.GetDatabase("Ebas");
             _firmaCollection = database.GetCollection<Firma>("Firma");
             _usuarioCollection = database.GetCollection<Usuarios>("Usuarios");
+            _evento = database.GetCollection<Evento>("Evento"); 
         }
 
         [HttpPost]
@@ -64,12 +68,42 @@ namespace Ebasproyecto.Controllers
         }
 
         // Acción para mostrar la vista de firma
-        public ActionResult Firma(string usuarioId, string eventoId)
+        public ActionResult Firma(string Id)
         {
-            ViewBag.UsuarioId = usuarioId;
-            ViewBag.EventoId = eventoId;
+            var eventoId = new ObjectId(Id);
+            var evento = _context.Evento.Find(e => e.Id == eventoId).FirstOrDefault();
+
+
+
+            // Recuperar el usuario de la sesión
+            var usuario = Session["Usuario"] as Usuarios;
+           
+
+            if (usuario == null)
+            {
+                return HttpNotFound("Usuario no encontrado.");
+            }
+
+            // Pasar los datos del usuario a la vista
+            ViewBag.Nombres = usuario.Nombres;
+            ViewBag.Apellidos = usuario.Apellidos;
+            ViewBag.Documento = usuario.Documento;
+            ViewBag.Telefono = usuario.Telefono;
+            ViewBag.Correo = usuario.Correo;
+            ViewBag.Sexo = usuario.Sexo;
+            ViewBag.Edad = usuario.Edad;
+            ViewBag.Municipio = usuario.Municipio;
+            ViewBag.Direccion = usuario.Direccion;
+            ViewBag.EstadoCivil = usuario.EstadoCivil;
+            ViewBag.TipoDocumento = usuario.TipoDocumento;
+            ViewBag.TipoPoblacion = usuario.TipoPoblacion;
+            ViewBag.TipoUsuario = usuario.TipoUsuario;
+            ViewBag.EventoNombre = evento.NombreEvento; 
+
             return View();
         }
+
+
 
         private ActionResult HttpNotFound(string mensaje)
         {
