@@ -1105,6 +1105,7 @@ C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\bin\es\System.Web.WebPa
 C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.csproj.AssemblyReference.cache
 C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.csproj.CopyComplete
 C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.dll
 C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.pdb
 C:\Users\estef\OneDrive\Documentos\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.csproj.AssemblyReference.cache
@@ -1491,4 +1492,3 @@ C:\Users\estef\OneDrive\Documentos\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Eb
 C:\Users\estef\OneDrive\Documentos\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproy.E4D03DC9.Up2Date
 C:\Users\estef\OneDrive\Documentos\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.dll
 C:\Users\estef\OneDrive\Documentos\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproyecto.pdb
-C:\Users\User\Documents\GitHub\ProyectoEbas\Ebasproyecto\obj\Debug\Ebasproy.E4D03DC9.Up2Date

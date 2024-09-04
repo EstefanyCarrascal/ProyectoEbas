@@ -29,6 +29,7 @@ namespace Ebasproyecto.Controllers
         [HttpPost]
         public ActionResult Login(string Correo, string Contraseña)
         {
+            // Verificar que los parámetros no sean nulos o vacíos
             if (string.IsNullOrEmpty(Correo) || string.IsNullOrEmpty(Contraseña))
             {
                 ViewBag.Message = "Por favor, ingrese correo y contraseña.";
@@ -38,8 +39,10 @@ namespace Ebasproyecto.Controllers
             // Buscar al usuario en la base de datos
             var user = _context.Users.Find(u => u.Correo == Correo && u.Contraseña == Contraseña).FirstOrDefault();
 
+            // Validar si el usuario fue encontrado
             if (user == null)
             {
+                // Si no se encontró el usuario, mostrar un mensaje de error
                 ViewBag.Message = "Usuario o contraseña incorrecta.";
                 return View("Index1");
             }
@@ -48,20 +51,21 @@ namespace Ebasproyecto.Controllers
             Session["Usuario"] = user;
 
             // Redirigir según el tipo de usuario
-            if (user.TipoUsuario == "Aprendiz")
-            {
-                return RedirectToAction("Index", "HomeAprendiz"/*, new { usuarioId = user.Id.ToString() }*/);
-            }
-
             if (user.TipoUsuario == "PersonalAdministrativo")
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            ViewBag.Message = "Tipo de usuario no reconocido.";
-            return View("Index1");
+            if (user.TipoUsuario == "Aprendiz")
+            {
+                return RedirectToAction("Index", "HomeAprendiz");
+            }
+            else
+            {
+                // Si el tipo de usuario no coincide con ningún caso, mostrar un mensaje de error
+                ViewBag.Message = "Tipo de usuario no reconocido.";
+                return View("Index1");
+            }
         }
-
 
         [HttpPost]
         public ActionResult Registrar(string Nombres, string Apellidos, string Correo, string Contraseña, string TipoUsuario)
