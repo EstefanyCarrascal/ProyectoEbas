@@ -15,13 +15,13 @@ namespace Ebasproyecto.Controllers
         // Constructor sin parámetros
         public FirmaController()
         {
-            var mongoClient = new MongoClient("mongodb://localhost:27017"); // Reemplaza con tu cadena de conexión
+            var mongoClient = new MongoClient("mongodb://localhost:27017"); 
             var database = mongoClient.GetDatabase("Ebas");
             _firmaCollection = database.GetCollection<Firma>("Firma");
             _usuarioCollection = database.GetCollection<Usuarios>("Usuarios");
         }
 
-        // Constructor con parámetros (opcional)
+        // Constructor con parámetros 
         public FirmaController(IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase("Ebas");

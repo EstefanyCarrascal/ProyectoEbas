@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Firma Digital";
     Layout = "~/Views/Shared/_Layout A.cshtml";
-
 }
 
 <h3>Firma Digital</h3>
@@ -31,30 +30,45 @@
     canvas.width = 600;
     canvas.height = 300;
 
+    // Event listeners para mouse
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseout', stopDrawing);
 
+    // Event listeners para touch
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchcancel', stopDrawing);
+
     function startDrawing(e) {
+        e.preventDefault();
         isDrawing = true;
         draw(e);
     }
 
     function draw(e) {
+        e.preventDefault();
         if (!isDrawing) return;
+
+        // Obtener la posición del touch o del mouse
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX || e.touches[0].clientX) - rect.left;
+        const y = (e.clientY || e.touches[0].clientY) - rect.top;
 
         ctx.lineWidth = 2;
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#000';
 
-        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.lineTo(x, y);
         ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+        ctx.moveTo(x, y);
     }
 
-    function stopDrawing() {
+    function stopDrawing(e) {
+        e.preventDefault();
         isDrawing = false;
         ctx.beginPath();
     }
