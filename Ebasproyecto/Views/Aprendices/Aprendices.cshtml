@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuarios</title>
+    <title>Aprendices</title>
     <style>
         .modal {
             display: none;
@@ -49,6 +49,9 @@
 <body>
 
     <button onclick="User(event)" id="openModalBtn">Crear</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("GenerarReporteUsuarios", "Aprendices")'" id="BottomPdf">
+        Generar Reporte PDF
+    </button>
     <div class="table-responsive">
         <table class="table">
             <thead class="thead-dark">
@@ -128,11 +131,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="Correo" class="form-label">Correo</label>
-                    <input id="Correo" type="text" name="Correo" class="form-control" placeholder="Ingrese su correo" required />
+                    <input id="Correo" type="email" name="Correo" class="form-control" placeholder="Ingrese su correo" required />
                 </div>
                 <div class="mb-3">
                     <label for="Telefono" class="form-label">Teléfono</label>
-                    <input id="Telefono" type="text" name="Telefono" class="form-control" placeholder="Ingrese su teléfono" required />
+                    <input id="Telefono" type="number" name="Telefono" class="form-control" placeholder="Ingrese su teléfono" required />
                 </div>
                 <div class="mb-3">
                     <label for="Sexo" class="form-label">Sexo</label>
@@ -140,11 +143,16 @@
                 </div>
                 <div class="mb-3">
                     <label for="Edad" class="form-label">Edad</label>
-                    <input id="Edad" type="text" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
+                    <input id="Edad" type="number" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
                 </div>
                 <div class="mb-3">
-                    <label for="EstadoCivil" class="form-label">Estado civil</label>
-                    <input id="EstadoCivil" type="text" name="EstadoCivil" class="form-control" placeholder="Ingrese su Estado civil" required />
+                    <label for="EstadoCivil" class="form-label">Estado Civil</label>
+                    <select id="EstadoCivil" name="EstadoCivil" class="form-control" placeholder="Seleccione su estado civil">
+                        <option value="Casado(a)">Casado(a)</option>
+                        <option value="Soltero(a)">Soltero(a)</option>
+                        <option value="Viudo(a)">Viudo(a)</option>
+                        <option value="Únion Libre">Únion Libre</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="Municipio" class="form-label">Municipio</label>
@@ -156,14 +164,17 @@
                 </div>
                 <div class="mb-3">
                     <label for="TipoPoblacion" class="form-label">Tipo de población</label>
-                    <input id="TipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su Tipo de población " required />
+                    <input id="TipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su tipo de población " required />
                 </div>
                 <div class="mb-3">
-                    <label for="TipoUsuario" class="form-label">Tipo de usuario</label>
-                    <input id="TipoUsuario" type="text" name="TipoUsuario" class="form-control" placeholder="Ingrese su Tipo de usuario" required />
+                    <label for="TipoUsuario" class="form-label">Tipo de Usuario</label>
+                    <select id="TipoUsuario" name="TipoUsuario" class="form-control" placeholder="Seleccione su tipo de usuario">
+                        <option value="PersonalAdministrativo">Personal Administrativo</option>
+                        <option value="Aprendiz">Aprendiz</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="Contraseña" class="form-label">Tipo de contraseña</label>
+                    <label for="Contraseña" class="form-label">Contraseña</label>
                     <input id="Contraseña" type="password" name="Contraseña" class="form-control" placeholder="Ingrese su contraseña" required />
                 </div>
                 <div class="d-grid">
@@ -177,7 +188,7 @@
     <div id="Editar" class="modal">
         <div class="modal-content">
             <span class="close" id="closeEditModalBtn">&times;</span>
-            <h4>Editar Aprendices</h4>
+            <h4>Editar Aprendiz</h4>
             <form action="@Url.Action("Editar", "Aprendices")" method="post">
                 <input type="hidden" id="EditarId" name="objectId" />
                 <div class="mb-3">
@@ -219,8 +230,13 @@
                     <input id="EditarEdad" type="text" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
                 </div>
                 <div class="mb-3">
-                    <label for="EditarEstadoCivil" class="form-label">Estado civil</label>
-                    <input id="EditarEstadoCivil" type="text" name="EstadoCivil" class="form-control" placeholder="Ingrese su Estado civil" required />
+                    <label for="EditarEstadoCivil" class="form-label">Estado Civil</label>
+                    <select id="EditarEstadoCivil" name="EstadoCivil" class="form-control" placeholder="Seleccione su estado civil">
+                        <option value="Casado(a)">Casado(a)</option>
+                        <option value="Soltero(a)">Soltero(a)</option>
+                        <option value="Viudo(a)">Viudo(a)</option>
+                        <option value="Únion Libre">Únion Libre</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="EditarMunicipio" class="form-label">Municipio</label>
@@ -235,11 +251,14 @@
                     <input id="EditarTipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su Tipo de población " required />
                 </div>
                 <div class="mb-3">
-                    <label for="EditarTipoUsuario" class="form-label">Tipo de usuario</label>
-                    <input id="EditarTipoUsuario" type="text" name="TipoUsuario" class="form-control" placeholder="Ingrese su Tipo de usuario" required />
+                    <label for="EditarTipoUsuario" class="form-label">Tipo de Usuario</label>
+                    <select id="EditarTipoUsuario" name="TipoUsuario" class="form-control" placeholder="Seleccione su tipo de usuario">
+                        <option value="PersonalAdministrativo">Personal Administrativo</option>
+                        <option value="Aprendiz">Aprendiz</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="EditarContraseña" class="form-label">Tipo de contraseña</label>
+                    <label for="EditarContraseña" class="form-label">Contraseña</label>
                     <input id="EditarContraseña" type="password" name="Contraseña" class="form-control" placeholder="Ingrese su contraseña" required />
                 </div>
                 <div class="d-grid">
@@ -337,7 +356,7 @@
             if (event.target == deleteModal) {
                 deleteModal.style.display = "none";
             }
-        } 
+        }
 
     </script>
 </body>

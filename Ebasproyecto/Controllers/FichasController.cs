@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Ebasproyecto.Model;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using System.IO;
 
 namespace Ebasproyecto.Controllers
 {
@@ -19,6 +22,69 @@ namespace Ebasproyecto.Controllers
             var collection = database.GetCollection<Fichas>("Fichas");
             List<Fichas> List = collection.Find(d => true).ToList();
             return View(List);
+        }
+
+        public ActionResult GenerarReporteFichas()
+        {
+            // Configuración de la conexión a MongoDB
+            var client = new MongoClient("mongodb://localhost:27017/");
+            var database = client.GetDatabase("Ebas");
+            var collection = database.GetCollection<Fichas>("Fichas");
+
+            // Obtener todas las fichas de la base de datos
+            var fichas = collection.Find(_ => true).ToList();
+
+            // Crear el documento PDF
+            Document documentoPDF = new Document(PageSize.A4);
+            MemoryStream stream = new MemoryStream();
+            PdfWriter.GetInstance(documentoPDF, stream).CloseStream = false;
+
+            documentoPDF.Open();
+
+            // Título del documento
+            Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+            Paragraph titulo = new Paragraph("Reporte de Fichas", tituloFont)
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
+            documentoPDF.Add(titulo);
+            documentoPDF.Add(new Paragraph("\n")); // Espacio
+
+            // Crear tabla con 6 columnas para las propiedades de las fichas
+            PdfPTable tabla = new PdfPTable(6)
+            {
+                WidthPercentage = 100
+            };
+            tabla.SetWidths(new float[] { 2f, 2f, 2f, 2f, 2f, 2f });
+
+            // Encabezados de la tabla
+            tabla.AddCell("Código");
+            tabla.AddCell("Jornada");
+            tabla.AddCell("Modalidad");
+            tabla.AddCell("Tipo");
+            tabla.AddCell("Fecha Inicio");
+            tabla.AddCell("Fecha Fin");
+
+            // Agregar datos de cada ficha a la tabla
+            foreach (var ficha in fichas)
+            {
+                tabla.AddCell(ficha.Codigo);
+                tabla.AddCell(ficha.Jornada);
+                tabla.AddCell(ficha.Modalidad);
+                tabla.AddCell(ficha.Tipo);
+                tabla.AddCell(ficha.FechaInicio);
+                tabla.AddCell(ficha.FechaFin);
+            }
+
+            // Añadir la tabla al documento PDF
+            documentoPDF.Add(tabla);
+
+            // Cerrar el documento
+            documentoPDF.Close();
+
+            // Devolver el PDF como archivo descargable
+            stream.Position = 0;
+            return File(stream, "application/pdf", "ReporteFichas.pdf");
         }
 
         [HttpPost]

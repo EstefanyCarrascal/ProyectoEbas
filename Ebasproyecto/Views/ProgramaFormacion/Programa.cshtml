@@ -49,6 +49,9 @@
 <body>
 
     <button onclick="User(event)" id="openModalBtn">Crear</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("GenerarReporteProgramas", "ProgramaFormacion")'" id="BottomPdf">
+        Generar Reporte PDF
+    </button>
     <div class="table-responsive">
         <table class="table">
             <thead class="thead-dark">
@@ -57,7 +60,6 @@
                     <th scope="col">Tipo</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Duracion</th>
-                    <th scope="col"></th>
                 </tr>
             </thead>
             @foreach (var list in Model)
@@ -82,7 +84,7 @@
     <div id="CrearPrograma" class="modal">
         <div class="modal-content">
             <span class="close" id="closeCrearModalBtn">&times;</span>
-            <h4>Crear nuevo programa de formación</h4>
+            <h4>Crear Nuevo Programa de Formación</h4>
             <form action="@Url.Action("Crear", "ProgramaFormacion")" method="post">
                 <div class="mb-3">
                     <label for="Codigo" class="form-label">Código</label>
@@ -90,7 +92,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="Tipo" class="form-label">Tipo</label>
-                    <select id="Tipo" name="Tipo" class="form-control" placeholder="Seleccione el tipo de prgrama">
+                    <select id="Tipo" name="Tipo" class="form-control" placeholder="Seleccione el tipo de programa">
                         <option value="Técnico">Técnico</option>
                         <option value="Tecnólogo">Tecnólogo</option>
                     </select>
@@ -101,7 +103,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="Duracion" class="form-label">Duracion</label>
+                    <label for="Duracion" class="form-label">Duración</label>
                     <input id="Duracion" type="text" name="Duracion" class="form-control" placeholder="Ingrese la duración del programa" required />
                 </div>
                 <div class="d-grid">
@@ -120,11 +122,11 @@
                 <input type="hidden" id="EditarId" name="objectId" />
                 <div class="mb-3">
                     <label for="EditarCodigo" class="form-label">Codigo</label>
-                    <input id="EditarCodigo" type="text" name="Codigo" class="form-control" placeholder="Ingrese el codigo" required />
+                    <input id="EditarCodigo" type="text" name="Codigo" class="form-control" placeholder="Ingrese el código del programa" required />
                 </div>
                 <div class="mb-3">
                     <label for="EditarTipo" class="form-label">Tipo</label>
-                    <select id="EditarTipo" name="Tipo" class="form-control" placeholder="Seleccione el tipo de prgrama">
+                    <select id="EditarTipo" name="Tipo" class="form-control" placeholder="Seleccione el tipo de programa">
                         <option value="Técnico">Técnico</option>
                         <option value="Tecnólogo">Tecnólogo</option>
                     </select>
@@ -134,7 +136,7 @@
                     <input id="EditarNombre" type="text" name="Nombre" class="form-control" placeholder="Ingrese el nombre del programa" required />
                 </div>
                 <div class="mb-3">
-                    <label for="EditarDuracion" class="form-label">Duracion</label>
+                    <label for="EditarDuracion" class="form-label">Duración</label>
                     <input id="EditarDuracion" type="text" name="Duracion" class="form-control" placeholder="Ingrese la duración del programa" required />
                 </div>
                 <div class="d-grid">
@@ -153,7 +155,7 @@
             </div>
             <form action="@Url.Action("Eliminar", "ProgramaFormacion")" method="post">
                 <input type="hidden" id="deleteId" name="objectId" />
-                <p>¿Estás seguro de que quieres eliminar este equipo?</p>
+                <p>¿Estás seguro de que quieres eliminar este Programa de Formación?</p>
                 <button type="submit" class="btn btn-danger">Sí</button>
                 <button type="button" class="btn btn-secondary" onclick="Cerrar()">No</button>
             </form>

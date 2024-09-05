@@ -32,5 +32,11 @@ namespace Ebasproyecto.Model
         {
             get { return _database.GetCollection<Evento>("Evento"); }
         }
+
+        public IMongoCollection<RegistroAsistencia> RegistroAsistencia
+        {
+            get { return _database.GetCollection<RegistroAsistencia>("RegistroAsistencia"); }
+        }
+
     }
 }

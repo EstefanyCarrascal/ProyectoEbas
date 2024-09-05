@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programas de formación</title>
+    <title>Eventos</title>
     <style>
         .modal {
             display: none;
@@ -47,8 +47,10 @@
     </style>
 </head>
 <body>
-
     <button onclick="User(event)" id="openModalBtn">Crear</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("GenerarReporteEventos", "Evento")'" id="BottomPdf">
+        Generar Reporte PDF
+    </button>
     <div class="table-responsive">
         <table class="table">
             <thead class="thead-dark">
@@ -57,6 +59,8 @@
                     <th scope="col">Descripción</th>
                     <th scope="col">Organizador</th>
                     <th scope="col">Fecha Evento</th>
+                    <th scope="col">Hora Inicio</th>
+                    <th scope="col">Hora Fin</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -68,8 +72,10 @@
                         <td>@list.Descripcion</td>
                         <td>@list.Organizador</td>
                         <td>@list.FechaEvento</td>
+                        <td>@list.HoraInicio</td>
+                        <td>@list.HoraFin</td>
                         <td>
-                            <button onclick="Editar(event, '@list.Id.ToString()', '@list.NombreEvento', '@list.Descripcion', '@list.Organizador', '@list.FechaEvento')">&#x270F; Editar</button>
+                            <button onclick="Editar(event, '@list.Id.ToString()', '@list.NombreEvento', '@list.Descripcion', '@list.Organizador', '@list.FechaEvento','@list.HoraInicio', '@list.HoraFin')">&#x270F; Editar</button>
                             <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
                         </td>
                     </tr>
@@ -82,7 +88,7 @@
     <div id="CrearEvento" class="modal">
         <div class="modal-content">
             <span class="close" id="closeCrearModalBtn">&times;</span>
-            <h4>Crear nuevo programa de formación</h4>
+            <h4>Crear Nuevo Evento</h4>
             <form action="@Url.Action("Crear", "Evento")" method="post">
                 <div class="mb-3">
                     <label for="NombreEvento" class="form-label">Nombre Evento</label>
@@ -97,8 +103,16 @@
                     <input id="Organizador" type="text" name="Organizador" class="form-control" placeholder="Ingrese el nombre del organizador del evento" required />
                 </div>
                 <div class="mb-3">
-                    <label for="FechaEvento" class="form-label">FechaEvento</label>
-                    <input id="FechaEvento" type="text" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                    <label for="FechaEvento" class="form-label">Fecha Evento</label>
+                    <input id="FechaEvento" type="date" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="HoraInicio" class="form-label">Hora Inicio</label>
+                    <input id="HoraInicio" type="time" name="HoraInicio" class="form-control" placeholder="Ingrese la hora inicio del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="HoraFin" class="form-label">Hora Fin</label>
+                    <input id="HoraFin" type="time" name="HoraFin" class="form-control" placeholder="Ingrese la hora fin del evento" required />
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-secondary btn-block">Crear</button>
@@ -111,7 +125,7 @@
     <div id="Editar" class="modal">
         <div class="modal-content">
             <span class="close" id="closeEditModalBtn">&times;</span>
-            <h4>Editar Programa de Formación</h4>
+            <h4>Editar Evento</h4>
             <form action="@Url.Action("Editar", "Evento")" method="post">
                 <input type="hidden" id="EditarId" name="objectId" />
                 <div class="mb-3">
@@ -128,7 +142,15 @@
                 </div>
                 <div class="mb-3">
                     <label for="EditarFechaEvento" class="form-label">Fecha Evento</label>
-                    <input id="EditarFechaEvento" type="text" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                    <input id="EditarFechaEvento" type="date" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarHoraInicio" class="form-label">Hora Inicio</label>
+                    <input id="EditarHoraInicio" type="time" name="HoraInicio" class="form-control" placeholder="Ingrese la hora inicio del evento" required />
+                </div>
+                <div class="mb-3">
+                    <label for="EditarHoraFin" class="form-label">Hora Fin</label>
+                    <input id="EditarHoraFin" type="time" name="HoraFin" class="form-control" placeholder="Ingrese la hora fin del evento" required />
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-secondary btn-block">Editar</button>
@@ -146,7 +168,7 @@
             </div>
             <form action="@Url.Action("Eliminar", "Evento")" method="post">
                 <input type="hidden" id="deleteId" name="objectId" />
-                <p>¿Estás seguro de que quieres eliminar este equipo?</p>
+                <p>¿Estás seguro de que quieres eliminar este Evento?</p>
                 <button type="submit" class="btn btn-danger">Sí</button>
                 <button type="button" class="btn btn-secondary" onclick="Cerrar()">No</button>
             </form>

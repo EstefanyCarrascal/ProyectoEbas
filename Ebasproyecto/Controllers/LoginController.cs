@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Ebasproyecto.Model;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using System.Web.Security;
 
 namespace Ebasproyecto.Controllers
 {
@@ -86,6 +87,11 @@ namespace Ebasproyecto.Controllers
 
             _context.Users.InsertOne(nuevoUsuario);
 
+            return RedirectToAction("Index1", "Login");
+        }
+        public ActionResult CerrarSesion()
+        {
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index1", "Login");
         }
     }

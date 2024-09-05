@@ -49,6 +49,9 @@
 <body>
 
     <button onclick="User(event)" id="openModalBtn">Crear</button>
+    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("GenerarReporteFichas", "Fichas")'" id="BottomPdf">
+        Generar Reporte PDF
+    </button>
     <div class="table-responsive">
         <table class="table">
             <thead class="thead-dark">
@@ -110,11 +113,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="FechaInicio" class="form-label">Fecha Inicio</label>
-                    <input id="FechaInicio" type="text" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha inicio" required />
+                    <input id="FechaInicio" type="date" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha inicio" required />
                 </div>
                 <div class="mb-3">
                     <label for="FechaFin" class="form-label">Fecha Fin</label>
-                    <input id="FechaFin" type="text" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin" required />
+                    <input id="FechaFin" type="date" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin" required />
                 </div>
 
                 <div class="d-grid">
@@ -133,7 +136,7 @@
                 <input type="hidden" id="EditarId" name="objectId" />
                 <div class="mb-3">
                     <label for="EditarCodigo" class="form-label">Codigo</label>
-                    <input id="EditarCodigo" type="text" name="Codigo" class="form-control" placeholder="Ingrese el codigo" required />
+                    <input id="EditarCodigo" type="text" name="Codigo" class="form-control" placeholder="Ingrese el código de la ficha" required />
                 </div>
                 <div class="mb-3">
                     <label for="EditarTipo" class="form-label">Tipo</label>
@@ -144,19 +147,19 @@
                 </div>
                 <div class="mb-3">
                     <label for="EditarJornada" class="form-label">Jornada</label>
-                    <input id="EditarJornada" type="text" name="Jornada" class="form-control" placeholder="Ingrese la jornada" required />
+                    <input id="EditarJornada" type="text" name="Jornada" class="form-control" placeholder="Ingrese la jornada de la ficha" required />
                 </div>
                 <div class="mb-3">
                     <label for="EditarModalidad" class="form-label">Modalidad</label>
-                    <input id="EditarModalidad" type="text" name="Modalidad" class="form-control" placeholder="Ingrese la modalidad" required />
+                    <input id="EditarModalidad" type="text" name="Modalidad" class="form-control" placeholder="Ingrese la modalidad de la ficha" required />
                 </div>
                 <div class="mb-3">
                     <label for="EditarFechaInicio" class="form-label">Fecha Inicio</label>
-                    <input id="EditarFechaInicio" type="text" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha Inicio" required />
+                    <input id="EditarFechaInicio" type="date" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha Inicio de la ficha" required />
                 </div>
                 <div class="mb-3">
                     <label for="EditarFechaFin" class="form-label">Fecha Fin</label>
-                    <input id="EditarFechaFin" type="text" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin" required />
+                    <input id="EditarFechaFin" type="date" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin de la ficha" required />
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-secondary btn-block">Editar</button>
@@ -174,7 +177,7 @@
             </div>
             <form action="@Url.Action("Eliminar", "PersonalAdministrativo")" method="post">
                 <input type="hidden" id="deleteId" name="objectId" />
-                <p>¿Estás seguro de que quieres eliminar este equipo?</p>
+                <p>¿Estás seguro de que quieres eliminar esta Ficha?</p>
                 <button type="submit" class="btn btn-danger">Sí</button>
                 <button type="button" class="btn btn-secondary" onclick="Cerrar()">No</button>
             </form>

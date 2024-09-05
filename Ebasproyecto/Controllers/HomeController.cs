@@ -25,6 +25,21 @@ namespace Ebasproyecto.Controllers
             var totaleventos = _context.Evento.CountDocuments(_ => true);
 
             ViewBag.totalevento = totaleventos;
+
+            var totaladministrativo = _context.Users.CountDocuments(_ => true);
+
+            ViewBag.totaladministrativo = totaladministrativo;
+
+
+            var totalregistro = _context.RegistroAsistencia.CountDocuments(_ => true);
+
+            ViewBag.totalregistro = totalregistro;
+
+
+            var totalaprendices = _context.Users.CountDocuments(_ => true);
+
+            ViewBag.totalaprendices = totalaprendices;
+
             return View();
         }
 

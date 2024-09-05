@@ -1,8 +1,11 @@
 ﻿using Ebasproyecto.Model;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,7 +25,73 @@ namespace Ebasproyecto.Controllers
             return View(List);
         }
 
-        [HttpPost]
+    public ActionResult GenerarReporteUsuarios()
+        {
+        // Configuración de la conexión a MongoDB
+        var client = new MongoClient("mongodb://localhost:27017/");
+        var database = client.GetDatabase("Ebas");
+        var collection = database.GetCollection<Usuarios>("Usuarios");
+
+        // Obtener todos los usuarios de la base de datos
+        var usuarios = collection.Find(d => d.TipoUsuario == "Aprendiz").ToList(); // Filtrar por TipoUsuario = "Aprendiz"
+
+
+            // Crear el documento PDF
+            Document documentoPDF = new Document(PageSize.A4);
+        MemoryStream stream = new MemoryStream();
+        PdfWriter.GetInstance(documentoPDF, stream).CloseStream = false;
+
+        documentoPDF.Open();
+
+        // Título del documento
+        Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+        Paragraph titulo = new Paragraph("Reporte de Usuarios", tituloFont)
+        {
+            Alignment = Element.ALIGN_CENTER
+        };
+        documentoPDF.Add(titulo);
+        documentoPDF.Add(new Paragraph("\n")); // Espacio
+
+        // Crear tabla con 7 columnas para las propiedades de los usuarios
+        PdfPTable tabla = new PdfPTable(7)
+        {
+            WidthPercentage = 100
+        };
+        tabla.SetWidths(new float[] { 2f, 2f, 2f, 2f, 2f, 2f, 2f });
+
+        // Encabezados de la tabla
+        tabla.AddCell("Nombres");
+        tabla.AddCell("Apellidos");
+        tabla.AddCell("Documento");
+        tabla.AddCell("Teléfono");
+        tabla.AddCell("Correo");
+        tabla.AddCell("Sexo");
+        tabla.AddCell("Edad");
+
+        // Agregar datos de cada usuario a la tabla
+        foreach (var usuario in usuarios)
+        {
+            tabla.AddCell(usuario.Nombres);
+            tabla.AddCell(usuario.Apellidos);
+            tabla.AddCell(usuario.Documento);
+            tabla.AddCell(usuario.Telefono);
+            tabla.AddCell(usuario.Correo);
+            tabla.AddCell(usuario.Sexo);
+            tabla.AddCell(usuario.Edad);
+        }
+
+        // Añadir la tabla al documento PDF
+        documentoPDF.Add(tabla);
+
+        // Cerrar el documento
+        documentoPDF.Close();
+
+        // Devolver el PDF como archivo descargable
+        stream.Position = 0;
+        return File(stream, "application/pdf", "ReporteUsuarios.pdf");
+    }
+
+    [HttpPost]
         public ActionResult Crear(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
         {
             try
