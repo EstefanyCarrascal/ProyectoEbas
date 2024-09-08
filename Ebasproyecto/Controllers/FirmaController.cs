@@ -29,9 +29,11 @@ namespace Ebasproyecto.Controllers
         [HttpPost]
         public async Task<ActionResult> GuardarFirma(string firmaData, string usuarioId, string eventoId)
         {
-            if (string.IsNullOrEmpty(firmaData))
+            if (string.IsNullOrEmpty(firmaData) || firmaData == "data:image/png;base64,")
             {
-                return RedirectToAction("Firma", new { Id = eventoId, mensaje = "No se ha recibido la firma." });
+                // Redirigir con mensaje de error si no hay firma
+                ViewBag.Mensaje = "No se ha guardado la firma";
+                return RedirectToAction("Firma", new { Id = eventoId, mensaje = "No se ha recibido la firma. Por favor, firme antes de guardar." });
             }
 
             // Validar que usuarioId y eventoId sean válidos ObjectId
@@ -73,13 +75,11 @@ namespace Ebasproyecto.Controllers
             };
 
             // Insertar la firma en MongoDB
-            await _firmaCollection.InsertOneAsync(nuevaFirma);
-
-            // Redirigir con mensaje de éxito
-            return RedirectToAction("Firma", new { Id = eventoId, mensaje = "Firma guardada exitosamente" });
+            TempData["Mensaje"] = "Firma guardada exitosamente";
+            return RedirectToAction("Firma", new { Id = eventoId });
         }
 
-        public ActionResult Firma(string Id, string mensaje)
+        public ActionResult Firma(string Id)
         {
             if (string.IsNullOrEmpty(Id))
             {
@@ -125,7 +125,7 @@ namespace Ebasproyecto.Controllers
             ViewBag.UsuarioId = usuario.Id.ToString();
             ViewBag.EventoId = evento.Id.ToString();
             ViewBag.EventoNombre = evento.NombreEvento;
-            ViewBag.Mensaje = mensaje;
+            
 
             return View();
         }

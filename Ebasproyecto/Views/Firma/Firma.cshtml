@@ -155,5 +155,21 @@
         const dataURL = canvas.toDataURL('image/png');
         document.getElementById('firmaData').value = dataURL;
         document.getElementById('firmaForm').submit();
+
+        // Crear un canvas vacío para comparar
+        const emptyCanvas = document.createElement('canvas');
+        emptyCanvas.width = canvas.width;
+        emptyCanvas.height = canvas.height;
+        const emptyCtx = emptyCanvas.getContext('2d');
+
+        // Comprobar si el contenido del canvas es igual al canvas vacío
+        if (dataURL === emptyCanvas.toDataURL('image/png')) {
+            alert('No se ha recibido la firma. Por favor, firme antes de guardar.');
+            e.preventDefault(); // Evitar que el formulario se envíe
+            return; // Detener la ejecución si el canvas está vacío
+        }
+
+        document.getElementById('firmaData').value = dataURL;
+        document.getElementById('firmaForm').submit();
     });
 </script>
