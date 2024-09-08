@@ -14,6 +14,7 @@ namespace Ebasproyecto.Controllers
         private readonly IMongoCollection<Firma> _firmaCollection;
         private readonly IMongoCollection<Usuarios> _usuarioCollection;
         private readonly IMongoCollection<Evento> _eventoCollection;
+        private readonly IMongoCollection<RegistroAsistencia> _asistenciaCollection;
 
         public FirmaController()
         {
@@ -22,20 +23,33 @@ namespace Ebasproyecto.Controllers
             _firmaCollection = database.GetCollection<Firma>("Firma");
             _usuarioCollection = database.GetCollection<Usuarios>("Usuarios");
             _eventoCollection = database.GetCollection<Evento>("Evento");
+            _asistenciaCollection = database.GetCollection<RegistroAsistencia>("RegistroAsistencia");
+         
         }
 
 
 
         [HttpPost]
         public async Task<ActionResult> GuardarFirma(string firmaData, string usuarioId, string eventoId)
-        {
+        {    // Verificar si la firma esta vacia o no.
             if (string.IsNullOrEmpty(firmaData) || firmaData == "data:image/png;base64,")
             {
+                // Si no hay firma o la firma es vacía, registrar asistencia con "Asistio = No"
+                var nuevaAsistenciaSinFirma = new RegistroAsistencia
+                {
+                    UsuarioId = usuarioId,
+                    EventoId = eventoId,
+                    Fecha = DateTime.Now.ToString("yyyy-MM-dd"),
+                    Hora = DateTime.Now.ToString("HH:mm:ss"),
+                    Asistio = false // Indicar que el usuario no asistió (no firmó)
+                };
+
+                await _asistenciaCollection.InsertOneAsync(nuevaAsistenciaSinFirma);
+
                 // Redirigir con mensaje de error si no hay firma
-                ViewBag.Mensaje = "No se ha guardado la firma";
+                ViewBag.Mensaje = "Debe firmar para que se registre su asistencia.";
                 return RedirectToAction("Firma", new { Id = eventoId, mensaje = "No se ha recibido la firma. Por favor, firme antes de guardar." });
             }
-
             // Validar que usuarioId y eventoId sean válidos ObjectId
             if (!ObjectId.TryParse(usuarioId, out ObjectId objectIdUsuario))
             {
@@ -73,6 +87,21 @@ namespace Ebasproyecto.Controllers
                 FechaFirma = DateTime.Now,
                 ImagenFirma = imageBase64 // Guardar solo la cadena base64 sin prefijo
             };
+
+            // Registrar la asistencia con firma válida
+            var nuevaAsistencia = new RegistroAsistencia
+            {
+                UsuarioId = usuarioId,
+                EventoId = eventoId,
+                Fecha = DateTime.Now.ToString("yyyy-MM-dd"),
+                Hora = DateTime.Now.ToString("HH:mm:ss"),
+                Asistio = true // Indicar que el usuario firmó y asistió
+            };
+
+            // Insertar la firma y la asistencia en MongoDB
+            await _firmaCollection.InsertOneAsync(nuevaFirma);
+            await _asistenciaCollection.InsertOneAsync(nuevaAsistencia);
+
 
             // Insertar la firma en MongoDB
             TempData["Mensaje"] = "Firma guardada exitosamente";
