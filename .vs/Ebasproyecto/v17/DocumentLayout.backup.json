@@ -1,7 +1,32 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\estef\\OneDrive\\Documentos\\GitHub\\ProyectoEbas\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|c:\\users\\estacion\\documents\\github\\proyectoebas\\ebasproyecto\\views\\firma\\firma.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|solutionrelative:ebasproyecto\\views\\firma\\firma.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\ebasproyecto\\controllers\\firmacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|solutionrelative:ebasproyecto\\controllers\\firmacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\ebasproyecto\\controllers\\fichascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|solutionrelative:ebasproyecto\\controllers\\fichascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\ebasproyecto\\model\\firma.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|solutionrelative:ebasproyecto\\model\\firma.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\ebasproyecto\\controllers\\homeaprendizcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|solutionrelative:ebasproyecto\\controllers\\homeaprendizcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\ebasproyecto\\controllers\\eventocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAFC0925-42A0-49FB-9B8E-7CA98F1129B4}|Ebasproyecto\\Ebasproyecto.csproj|solutionrelative:ebasproyecto\\controllers\\eventocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -17,19 +42,83 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Firma.cshtml",
+              "DocumentMoniker": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Views\\Firma\\Firma.cshtml",
+              "RelativeDocumentMoniker": "Ebasproyecto\\Views\\Firma\\Firma.cshtml",
+              "ToolTip": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Views\\Firma\\Firma.cshtml",
+              "RelativeToolTip": "Ebasproyecto\\Views\\Firma\\Firma.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-09-07T19:43:53.515Z",
+              "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HomeAprendizController.cs",
+              "DocumentMoniker": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\HomeAprendizController.cs",
+              "RelativeDocumentMoniker": "Ebasproyecto\\Controllers\\HomeAprendizController.cs",
+              "ToolTip": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\HomeAprendizController.cs",
+              "RelativeToolTip": "Ebasproyecto\\Controllers\\HomeAprendizController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-07T20:56:16.135Z"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FirmaController.cs",
+              "DocumentMoniker": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\FirmaController.cs",
+              "RelativeDocumentMoniker": "Ebasproyecto\\Controllers\\FirmaController.cs",
+              "ToolTip": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\FirmaController.cs",
+              "RelativeToolTip": "Ebasproyecto\\Controllers\\FirmaController.cs",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAAwH8AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-07T19:33:54.66Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EventoController.cs",
+              "DocumentMoniker": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\EventoController.cs",
+              "RelativeDocumentMoniker": "Ebasproyecto\\Controllers\\EventoController.cs",
+              "ToolTip": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\EventoController.cs",
+              "RelativeToolTip": "Ebasproyecto\\Controllers\\EventoController.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAcwKcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-07T21:04:29.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FichasController.cs",
+              "DocumentMoniker": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\FichasController.cs",
+              "RelativeDocumentMoniker": "Ebasproyecto\\Controllers\\FichasController.cs",
+              "ToolTip": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Controllers\\FichasController.cs",
+              "RelativeToolTip": "Ebasproyecto\\Controllers\\FichasController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAK4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-07T20:35:57.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Firma.cs",
+              "DocumentMoniker": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Model\\Firma.cs",
+              "RelativeDocumentMoniker": "Ebasproyecto\\Model\\Firma.cs",
+              "ToolTip": "C:\\Users\\ESTACION\\Documents\\GitHub\\ProyectoEbas\\Ebasproyecto\\Model\\Firma.cs",
+              "RelativeToolTip": "Ebasproyecto\\Model\\Firma.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAUwBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-07T19:31:53.039Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -2,9 +2,17 @@
 @{
     ViewBag.Title = "Firma Digital";
     Layout = "~/Views/Shared/_Layout A.cshtml";
+    var mensaje = ViewBag.Mensaje as string;
 }
 
 <h3>Firma Digital</h3>
+
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <div class="alert alert-info">
+        @mensaje
+    </div>
+}
 
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
     <h4>Información del Usuario</h4>
@@ -70,7 +78,6 @@
     </table>
 </div>
 
-
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 20px;">
     <div style="border: 1px solid #000; width: 600px; height: 300px; display: flex; justify-content: center; align-items: center;">
         <canvas id="canvas" style="border: 1px solid #ddd;"></canvas>
@@ -79,17 +86,15 @@
     <div>
         <button id="clearButton">Limpiar</button>
         <button id="saveButton">Guardar Firma</button>
-        <!-- Botón "Volver" con estilo y posicionado -->
     </div>
 </div>
 
-<form id="firmaForm" method="post" action="@Url.Action("GuardarFirma", "Firma")" style="display:none;">
-    <input type="hidden" name="firmaData" id="firmaData">
-    <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId">
-    <input type="hidden" name="eventoId" value="@ViewBag.EventoId">
+<form id="firmaForm" method="post" action="/Firma/GuardarFirma">
+    <input type="hidden" id="firmaData" name="firmaData" />
+    <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId" /> <!-- Añade el ID del usuario -->
+    <input type="hidden" name="eventoId" value="@ViewBag.EventoId" /> <!-- Añade el ID del evento -->
 </form>
 
-<!-- Botón "Volver" con estilo y posicionado en la esquina inferior derecha -->
 <a id="backButton" class="btn btn-secondary" href="@Url.Action("Index", "HomeAprendiz")" style="position: absolute; bottom: 20px; right: 20px;">Volver</a>
 
 <script>
@@ -122,7 +127,6 @@
         e.preventDefault();
         if (!isDrawing) return;
 
-        // Obtener la posición del touch o del mouse
         const rect = canvas.getBoundingClientRect();
         const x = (e.clientX || e.touches[0].clientX) - rect.left;
         const y = (e.clientY || e.touches[0].clientY) - rect.top;

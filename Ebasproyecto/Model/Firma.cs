@@ -19,7 +19,7 @@ namespace Ebasproyecto.Model
         [BsonElement("FechaFirma")]
         public DateTime FechaFirma { get; set; }
 
-        [BsonElement("ImagenFirma")]
-        public byte[] ImagenFirma { get; set; }
+        [BsonRepresentation(BsonType.String)] // Para almacenar la imagen como string en formato Base64
+        public string ImagenFirma { get; set; } // Imagen en Base64
     }
 }
