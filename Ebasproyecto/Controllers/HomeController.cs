@@ -66,7 +66,7 @@ namespace Ebasproyecto.Controllers
 
                 if (user == null)
                 {
-                    return RedirectToAction("Index", "Login");
+                    return RedirectToAction("Index1", "Login");
                 }
 
                 var collection = _database.GetCollection<Usuarios>("Usuarios");
@@ -98,12 +98,12 @@ namespace Ebasproyecto.Controllers
                 // Actualizar los datos en la sesión
                 Session["Usuario"] = usuario;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index1");
             }
             catch (Exception ex)
             {
                 // Manejo de error: Redirigir a la vista Index con el mensaje de error
-                return RedirectToAction("Index", new { mensaje = ex.Message });
+                return RedirectToAction("Index1", new { mensaje = ex.Message });
             }
         }
 
