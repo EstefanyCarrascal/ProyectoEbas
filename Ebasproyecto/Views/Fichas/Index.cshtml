@@ -175,7 +175,7 @@
                 <h5 class="modal-title">Confirmación de Eliminación</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="Cerrar()">&times;</button>
             </div>
-            <form action="@Url.Action("Eliminar", "Fichas")" method="post">
+            <form action="@Url.Action("Eliminar", "PersonalAdministrativo")" method="post">
                 <input type="hidden" id="deleteId" name="objectId" />
                 <p>¿Estás seguro de que quieres eliminar esta Ficha?</p>
                 <button type="submit" class="btn btn-danger">Sí</button>
