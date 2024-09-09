@@ -193,13 +193,15 @@
         var editModal = document.getElementById("Editar");
         var closeEditModalBtn = document.getElementById("closeEditModalBtn");
 
-        function Editar(event, id, NombreEvento, Descripcion, Organizador, FechaEvento) {
+        function Editar(event, id, NombreEvento, Descripcion, Organizador, FechaEvento, HoraInicio, HoraFin) {
             event.preventDefault();
             document.getElementById("EditarId").value = id;
             document.getElementById("EditarNombreEvento").value = NombreEvento;
             document.getElementById("EditarDescripcion").value = Descripcion;
             document.getElementById("EditarOrganizador").value = Organizador;
             document.getElementById("EditarFechaEvento").value = FechaEvento;
+            document.getElementById("EditarHoraInicio").value = HoraInicio;
+            document.getElementById("EditarHoraFin").value = HoraFin;
             editModal.style.display = "block";
         }
 
