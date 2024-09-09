@@ -34,9 +34,19 @@ namespace Ebasproyecto.Controllers
         {    // Verificar si la firma esta vacia o no.
             if (string.IsNullOrEmpty(firmaData) || firmaData == "data:image/png;base64,")
             {
+
+
+                if (string.IsNullOrEmpty(firmaData) || firmaData == "data:image/png;base64," || firmaData == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgEBAYUmJ1cAAAAASUVORK5CYII=")
+                {
+                    // Si no hay firma o la firma es vacía, no se guarda la asistencia ni la firma
+                    ViewBag.Mensaje = "Debe firmar para que se registre su asistencia.";
+                    return RedirectToAction("Firma", new { Id = eventoId, mensaje = "No se ha recibido la firma. Por favor, firme antes de guardar." });
+                }
                 // Si no hay firma o la firma es vacía, registrar asistencia con "Asistio = No"
                 var nuevaAsistenciaSinFirma = new RegistroAsistencia
                 {
+
+
                     UsuarioId = usuarioId,
                     EventoId = eventoId,
                     Fecha = DateTime.Now.ToString("yyyy-MM-dd"),
@@ -48,7 +58,7 @@ namespace Ebasproyecto.Controllers
 
                 // Redirigir con mensaje de error si no hay firma
                 ViewBag.Mensaje = "Debe firmar para que se registre su asistencia.";
-                return RedirectToAction("Firma", new { Id = eventoId, mensaje = "No se ha recibido la firma. Por favor, firme antes de guardar." });
+                return RedirectToAction("Firma", new { Id = eventoId, mensaje = "Aún no has firmado, debes firmar para registrar tú asistencia." });
             }
             // Validar que usuarioId y eventoId sean válidos ObjectId
             if (!ObjectId.TryParse(usuarioId, out ObjectId objectIdUsuario))
@@ -154,7 +164,12 @@ namespace Ebasproyecto.Controllers
             ViewBag.UsuarioId = usuario.Id.ToString();
             ViewBag.EventoId = evento.Id.ToString();
             ViewBag.EventoNombre = evento.NombreEvento;
-            
+
+            if (TempData["Mensaje"] != null)
+            {
+                ViewBag.Mensaje = TempData["Mensaje"]; // Asignar el valor de TempData a ViewBag
+            }
+
 
             return View();
         }

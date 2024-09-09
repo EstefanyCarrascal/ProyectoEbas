@@ -85,7 +85,7 @@
     <br />
     <div>
         <button id="clearButton">Limpiar</button>
-        <button id="saveButton">Guardar Firma</button>
+        <button id="saveButton">Guardar registro</button>
     </div>
 </div>
 
@@ -153,8 +153,7 @@
 
     document.getElementById('saveButton').addEventListener('click', function () {
         const dataURL = canvas.toDataURL('image/png');
-        document.getElementById('firmaData').value = dataURL;
-        document.getElementById('firmaForm').submit();
+      
 
         // Crear un canvas vacío para comparar
         const emptyCanvas = document.createElement('canvas');
