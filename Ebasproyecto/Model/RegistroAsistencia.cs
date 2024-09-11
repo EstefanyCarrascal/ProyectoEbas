@@ -7,10 +7,10 @@ public class RegistroAsistencia
     [BsonRepresentation(BsonType.ObjectId)]
     public ObjectId Id { get; set; }
 
-    [BsonElement("UsuarioId")]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string UsuarioId { get; set; }
 
-    [BsonElement("EventoId")]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string EventoId { get; set; }
 
     [BsonElement("Nombres")]

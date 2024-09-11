@@ -22,11 +22,10 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.UsuarioId</td>
-                <td>@item.EventoId</td>
+
                 <td>@item.Nombres</td>
                 <td>@item.NombreEvento</td>
-                <td>@item.Asistio</td>
+                <td>@(item.Asistio ? "Sí" : "No")</td>
                 <td>@item.Fecha</td>
                 <td>@item.Hora</td>
             </tr>
