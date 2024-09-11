@@ -13,6 +13,12 @@ public class RegistroAsistencia
     [BsonElement("EventoId")]
     public string EventoId { get; set; }
 
+    [BsonElement("Nombres")]
+    public string Nombres { get; set; }
+
+    [BsonElement("NombreEvento")]
+    public string NombreEvento { get; set; }
+
     [BsonElement("Fecha")]
     public string Fecha { get; set; }
 
@@ -20,5 +26,5 @@ public class RegistroAsistencia
     public string Hora { get; set; }
 
     [BsonElement("Asistio")]
-    public bool Asistio { get; set; } // Ejemplo: "Sí"
+    public bool Asistio { get; set; } 
 }

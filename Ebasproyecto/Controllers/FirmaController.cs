@@ -30,7 +30,7 @@ namespace Ebasproyecto.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> GuardarFirma(string firmaData, string usuarioId, string eventoId)
+        public async Task<ActionResult> GuardarFirma(string firmaData, string usuarioId, string eventoId, string nombres,string nombreevento)
         {    // Verificar si la firma esta vacia o no.
             if (string.IsNullOrEmpty(firmaData) || firmaData == "data:image/png;base64,")
             {
@@ -49,6 +49,8 @@ namespace Ebasproyecto.Controllers
 
                     UsuarioId = usuarioId,
                     EventoId = eventoId,
+                    Nombres = nombres,
+                    NombreEvento = nombreevento,
                     Fecha = DateTime.Now.ToString("yyyy-MM-dd"),
                     Hora = DateTime.Now.ToString("HH:mm:ss"),
                     Asistio = false // Indicar que el usuario no asistió (no firmó)
@@ -103,6 +105,8 @@ namespace Ebasproyecto.Controllers
             {
                 UsuarioId = usuarioId,
                 EventoId = eventoId,
+                Nombres = nombres,
+                NombreEvento = nombreevento,
                 Fecha = DateTime.Now.ToString("yyyy-MM-dd"),
                 Hora = DateTime.Now.ToString("HH:mm:ss"),
                 Asistio = true // Indicar que el usuario firmó y asistió

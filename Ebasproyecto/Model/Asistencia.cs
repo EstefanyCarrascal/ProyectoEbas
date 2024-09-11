@@ -12,18 +12,14 @@ namespace Ebasproyecto.Model
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
-
-        [BsonElement("Fecha")]
+        public string Asistio { get; set; } // Cambiado a string
         public string Fecha { get; set; }
+        public string Hora { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string EventoId { get; set; }
 
-        [BsonElement("HoraInicio")]
-        public string HoraInicio { get; set; }
-
-        [BsonElement("HoraFin")]
-        public string HoraFin { get; set; }
-
-        [BsonElement("Detalles")]
-        public string Detalles { get; set; }
-
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string UsuarioId { get; set; }
     }
+
 }

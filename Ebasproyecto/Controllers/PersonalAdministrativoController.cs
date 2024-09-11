@@ -193,6 +193,26 @@ namespace Ebasproyecto.Controllers
                 return RedirectToAction("user", new { mensaje = "Error al eliminar la sala." });
             }
         }
+        public ActionResult Asistencia()
+        {
+            var database = cn.GetDatabase("Ebas"); // Consistencia en el nombre de la base de datos
+            var collection = database.GetCollection<RegistroAsistencia>("RegistroAsistencia"); // Consistencia en el nombre de la colección
+
+            var asistencias = collection.Find(a => a.Asistio == true).ToList();
+
+
+
+            var nombres = new List<dynamic>();
+
+            foreach (var asistencia in asistencias)
+            {
+                var usuarioObjectId = MongoDB.Bson.ObjectId.Parse(asistencia.UsuarioId);
+                var eventoObjectId = MongoDB.Bson.ObjectId.Parse(asistencia.EventoId);
+
+                var aprendiz = collection.Find(u => u.Id == usuarioObjectId).FirstOrDefault();
+            }
+            return View(asistencias);
+        }
 
 
     }
