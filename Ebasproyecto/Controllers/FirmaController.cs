@@ -31,7 +31,21 @@ namespace Ebasproyecto.Controllers
 
         [HttpPost]
         public async Task<ActionResult> GuardarFirma(string firmaData, string usuarioId, string eventoId, string nombres,string nombreevento)
-        {    // Verificar si la firma esta vacia o no.
+        {   // Verificar si el usuario ya ha registrado asistencia para el evento
+            var asistenciaExistente = await _asistenciaCollection
+                .Find(a => a.UsuarioId == usuarioId && a.EventoId == eventoId)
+                .FirstOrDefaultAsync();
+
+            if (asistenciaExistente != null)
+            {
+                // Si ya existe un registro de asistencia, mostrar mensaje de error
+                TempData["Mensaje"] = "Ya has registrado tu asistencia en este evento.";
+                return RedirectToAction("Firma", new { Id = eventoId });
+            }
+
+
+
+            // Verificar si la firma esta vacia o no.
             if (string.IsNullOrEmpty(firmaData) || firmaData == "data:image/png;base64,")
             {
 
