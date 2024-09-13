@@ -87,7 +87,7 @@ namespace Ebasproyecto.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(string NombreEvento, string Descripcion, string Organizador, string FechaEvento)
+        public ActionResult Crear(string NombreEvento, string Descripcion, string Organizador, string FechaEvento, string HoraInicio, string HoraFin)
         {
             try
             {
@@ -99,6 +99,8 @@ namespace Ebasproyecto.Controllers
                     Descripcion = Descripcion,
                     Organizador = Organizador,
                     FechaEvento = FechaEvento,
+                    HoraInicio = HoraInicio,
+                    HoraFin = HoraFin
                 };
 
                 collection.InsertOne(Evento);
@@ -113,7 +115,7 @@ namespace Ebasproyecto.Controllers
 
         }
         [HttpPost]
-        public ActionResult Editar(string objectId, string NombreEvento, string Descripcion, string Organizador, string FechaEvento)
+        public ActionResult Editar(string objectId, string NombreEvento, string Descripcion, string Organizador, string FechaEvento, string HoraInicio, string HoraFin)
         {
             try
             {
@@ -132,6 +134,8 @@ namespace Ebasproyecto.Controllers
                     Descripcion = Descripcion,
                     Organizador = Organizador,
                     FechaEvento = FechaEvento,
+                    HoraInicio = HoraInicio,
+                    HoraFin = HoraFin
                 };
 
                 collection.ReplaceOne(d => d.Id == parsedObjectId, Evento);

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Web;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -14,7 +10,7 @@ namespace Ebasproyecto.Model
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
 
-        [BsonElement ("Nombres")]
+        [BsonElement("Nombres")]
         public string Nombres { get; set; }
 
         [BsonElement("Apellidos")]
@@ -24,7 +20,6 @@ namespace Ebasproyecto.Model
         public string Documento { get; set; }
 
         [BsonElement("Telefono")]
-
         public string Telefono { get; set; }
 
         [BsonElement("Correo")]
@@ -34,13 +29,13 @@ namespace Ebasproyecto.Model
         public string Sexo { get; set; }
 
         [BsonElement("Edad")]
-        public string Edad {  get; set; }
+        public string Edad { get; set; }
 
         [BsonElement("Municipio")]
         public string Municipio { get; set; }
 
         [BsonElement("Direccion")]
-        public string Direccion {  get; set; }
+        public string Direccion { get; set; }
 
         [BsonElement("EstadoCivil")]
         public string EstadoCivil { get; set; }
@@ -56,5 +51,6 @@ namespace Ebasproyecto.Model
 
         [BsonElement("Contraseña")]
         public string Contraseña { get; set; }
+
     }
 }

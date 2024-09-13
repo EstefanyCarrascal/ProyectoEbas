@@ -78,6 +78,7 @@
                         <td>
                             <button onclick="Editar(event, '@list.Id.ToString()', '@list.Codigo', '@list.Tipo', '@list.Jornada', '@list.Modalidad', '@list.FechaInicio', '@list.FechaFin')">&#x270F; Editar</button>
                             <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
+                            <button onclick="AsignarFicha(event, '@list.Id.ToString()')">Asignar Ficha</button>
                         </td>
                     </tr>
                 </tbody>
@@ -113,11 +114,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="FechaInicio" class="form-label">Fecha Inicio</label>
-                    <input id="FechaInicio" type="date" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha inicio" required />
+                    <input id="FechaInicio" type="date" name="FechaInicio" class="form-control" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 </div>
                 <div class="mb-3">
                     <label for="FechaFin" class="form-label">Fecha Fin</label>
-                    <input id="FechaFin" type="date" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin" required />
+                    <input id="FechaFin" type="date" name="FechaFin" class="form-control" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 </div>
 
                 <div class="d-grid">
@@ -126,7 +127,6 @@
             </form>
         </div>
     </div>
-
     <!-- Modal para Editar Personal Administrativo -->
     <div id="Editar" class="modal">
         <div class="modal-content">
@@ -155,11 +155,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="EditarFechaInicio" class="form-label">Fecha Inicio</label>
-                    <input id="EditarFechaInicio" type="date" name="FechaInicio" class="form-control" placeholder="Ingrese la fecha Inicio de la ficha" required />
+                    <input id="EditarFechaInicio" type="date" name="FechaInicio" class="form-control" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 </div>
                 <div class="mb-3">
                     <label for="EditarFechaFin" class="form-label">Fecha Fin</label>
-                    <input id="EditarFechaFin" type="date" name="FechaFin" class="form-control" placeholder="Ingrese la fecha fin de la ficha" required />
+                    <input id="EditarFechaFin" type="date" name="FechaFin" class="form-control" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-secondary btn-block">Editar</button>
@@ -175,7 +175,7 @@
                 <h5 class="modal-title">Confirmación de Eliminación</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" onclick="Cerrar()">&times;</button>
             </div>
-            <form action="@Url.Action("Eliminar", "PersonalAdministrativo")" method="post">
+            <form action="@Url.Action("Eliminar", "Fichas")" method="post">
                 <input type="hidden" id="deleteId" name="objectId" />
                 <p>¿Estás seguro de que quieres eliminar esta Ficha?</p>
                 <button type="submit" class="btn btn-danger">Sí</button>
@@ -191,9 +191,10 @@
         var openCreateModalBtn = document.getElementById("openModalBtn");
         var closeCreateModalBtn = document.getElementById("closeCrearModalBtn");
 
-        openCreateModalBtn.onclick = function () {
-            createModal.style.display = "block";
-        }
+        openCreateModalBtn.onclick =
+            openCreateModalBtn.onclick = function () {
+                createModal.style.display = "block";
+            }
 
         closeCreateModalBtn.onclick = function () {
             createModal.style.display = "none";
@@ -203,15 +204,15 @@
         var editModal = document.getElementById("Editar");
         var closeEditModalBtn = document.getElementById("closeEditModalBtn");
 
-        function Editar(event, id, Codigo, Tipo, Jornada, Modalidad, FechaInicio, FechaFin) {
+        function Editar(event, id, codigo, tipo, jornada, modalidad, fechaInicio, fechaFin) {
             event.preventDefault();
             document.getElementById("EditarId").value = id;
-            document.getElementById("EditarCodigo").value = Codigo;
-            document.getElementById("Tipo").value = Tipo;
-            document.getElementById("EditarJornada").value = Jornada;
-            document.getElementById("EditarModalidad").value = Modalidad;
-            document.getElementById("EditarFechaInicio").value = FechaInicio;
-            document.getElementById("EditarFechaFin").value = FechaFin;
+            document.getElementById("EditarCodigo").value = codigo;
+            document.getElementById("EditarTipo").value = tipo;
+            document.getElementById("EditarJornada").value = jornada;
+            document.getElementById("EditarModalidad").value = modalidad;
+            document.getElementById("EditarFechaInicio").value = fechaInicio;
+            document.getElementById("EditarFechaFin").value = fechaFin;
             editModal.style.display = "block";
         }
 
@@ -232,16 +233,18 @@
             deleteModal.style.display = "none";
         }
 
+        // Cerrar modales al hacer clic fuera del modal
         window.onclick = function (event) {
             if (event.target == createModal) {
                 createModal.style.display = "none";
-            } else if (event.target == editModal) {
+            }
+            if (event.target == editModal) {
                 editModal.style.display = "none";
-            } else if (event.target == deleteModal) {
+            }
+            if (event.target == deleteModal) {
                 deleteModal.style.display = "none";
             }
         }
     </script>
-
 </body>
 </html>

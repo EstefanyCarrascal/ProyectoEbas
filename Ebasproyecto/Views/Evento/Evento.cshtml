@@ -84,7 +84,7 @@
         </table>
     </div>
 
-    <!-- Modal para Crear Nuevo Programa -->
+    <!-- Modal para Crear Nuevo Evento -->
     <div id="CrearEvento" class="modal">
         <div class="modal-content">
             <span class="close" id="closeCrearModalBtn">&times;</span>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="FechaEvento" class="form-label">Fecha Evento</label>
-                    <input id="FechaEvento" type="date" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                    <input id="FechaEvento" type="date" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                 </div>
                 <div class="mb-3">
                     <label for="HoraInicio" class="form-label">Hora Inicio</label>
@@ -121,7 +121,7 @@
         </div>
     </div>
 
-    <!-- Modal para Editar Programa -->
+    <!-- Modal para Editar Evento -->
     <div id="Editar" class="modal">
         <div class="modal-content">
             <span class="close" id="closeEditModalBtn">&times;</span>
@@ -142,7 +142,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="EditarFechaEvento" class="form-label">Fecha Evento</label>
-                    <input id="EditarFechaEvento" type="date" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" required />
+                    <input id="EditarFechaEvento" type="date" name="FechaEvento" class="form-control" placeholder="Ingrese la fecha del evento" min="@DateTime.Now.ToString("yyyy-MM-dd")" required />
                 </div>
                 <div class="mb-3">
                     <label for="EditarHoraInicio" class="form-label">Hora Inicio</label>
@@ -176,7 +176,7 @@
     </div>
 
     <script>
-        // Modal para crear programa
+        // Modal para crear evento
         var createModal = document.getElementById("CrearEvento");
         var openCreateModalBtn = document.getElementById("openModalBtn");
         var closeCreateModalBtn = document.getElementById("closeCrearModalBtn");
@@ -189,17 +189,18 @@
             createModal.style.display = "none";
         }
 
-        // Modal para editar programa
+        // Modal para editar evento
         var editModal = document.getElementById("Editar");
         var closeEditModalBtn = document.getElementById("closeEditModalBtn");
 
-        function Editar(event, id, NombreEvento, Descripcion, Organizador, FechaEvento) {
-            event.preventDefault();
+        function Editar(event, id, nombre, descripcion, organizador, fechaEvento, horaInicio, horaFin) {
             document.getElementById("EditarId").value = id;
-            document.getElementById("EditarNombreEvento").value = NombreEvento;
-            document.getElementById("EditarDescripcion").value = Descripcion;
-            document.getElementById("EditarOrganizador").value = Organizador;
-            document.getElementById("EditarFechaEvento").value = FechaEvento;
+            document.getElementById("EditarNombreEvento").value = nombre;
+            document.getElementById("EditarDescripcion").value = descripcion;
+            document.getElementById("EditarOrganizador").value = organizador;
+            document.getElementById("EditarFechaEvento").value = fechaEvento;
+            document.getElementById("EditarHoraInicio").value = horaInicio;
+            document.getElementById("EditarHoraFin").value = horaFin;
             editModal.style.display = "block";
         }
 
@@ -207,11 +208,10 @@
             editModal.style.display = "none";
         }
 
-        // Modal para eliminar programa
+        // Modal para eliminar evento
         var deleteModal = document.getElementById("Eliminar");
 
         function Eliminar(event, id) {
-            event.preventDefault();
             document.getElementById("deleteId").value = id;
             deleteModal.style.display = "block";
         }
@@ -219,18 +219,6 @@
         function Cerrar() {
             deleteModal.style.display = "none";
         }
-
-        window.onclick = function (event) {
-            if (event.target == createModal) {
-                createModal.style.display = "none";
-            } else if (event.target == editModal) {
-                editModal.style.display = "none";
-            } else if (event.target == deleteModal) {
-                deleteModal.style.display = "none";
-            }
-        }
     </script>
-
 </body>
 </html>
-

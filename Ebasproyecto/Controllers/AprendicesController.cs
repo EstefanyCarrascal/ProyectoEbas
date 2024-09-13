@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace Ebasproyecto.Controllers
 {
@@ -24,8 +26,7 @@ namespace Ebasproyecto.Controllers
             List<Usuarios> List = collection.Find(d => d.TipoUsuario == "Aprendiz").ToList(); // Filtrar por TipoUsuario = "Aprendiz"
             return View(List);
         }
-
-    public ActionResult GenerarReporteUsuarios()
+        public ActionResult GenerarReporteUsuarios()
         {
         // Configuración de la conexión a MongoDB
         var client = new MongoClient("mongodb://localhost:27017/");
@@ -126,7 +127,6 @@ namespace Ebasproyecto.Controllers
                 return RedirectToAction("Aprendices", new { mensaje = "Error al insertar la sala." });
             }
         }
-
         [HttpPost]
         public ActionResult Editar(string objectId, string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
         {

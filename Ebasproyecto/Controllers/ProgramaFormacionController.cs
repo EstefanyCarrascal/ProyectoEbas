@@ -24,7 +24,6 @@ namespace Ebasproyecto.Controllers
             List<ProgramaFormacion> List = collection.Find(d => true).ToList();
             return View(List);
         }
-
         public ActionResult GenerarReporteProgramas()
         {
             // Configuración de la conexión a MongoDB

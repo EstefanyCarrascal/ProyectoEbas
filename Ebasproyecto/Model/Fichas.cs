@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Web;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -10,7 +6,6 @@ namespace Ebasproyecto.Model
 {
     public class Fichas
     {
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
@@ -31,6 +26,6 @@ namespace Ebasproyecto.Model
         public string FechaInicio { get; set; }
 
         [BsonElement("FechaFin")]
-        public string FechaFin {  get; set; }
+        public string FechaFin { get; set; }
     }
 }
