@@ -22,6 +22,14 @@ namespace Ebasproyecto.Controllers
             var database = cn.GetDatabase("Ebas");
             var collection = database.GetCollection<ProgramaFormacion>("ProgramaFormacion");
             List<ProgramaFormacion> List = collection.Find(d => true).ToList();
+            var collection1 = database.GetCollection<Fichas>("Fichas");
+
+            var fichas = collection1.Find(d => true).ToList();
+            ViewBag.Fichas = new SelectList(fichas.Select(c => new
+            {
+                Id = c.Id,
+                Codigo = c.Codigo = $"{c.Codigo}"
+            }), "Id", "Codigo");
             return View(List);
         }
         public ActionResult GenerarReporteProgramas()
@@ -85,7 +93,7 @@ namespace Ebasproyecto.Controllers
 
 
         [HttpPost]
-        public ActionResult Crear(string Codigo,string Nombre, string Tipo, string Duracion)
+        public ActionResult Crear(string Codigo,string Nombre, string Tipo, string Duracion, string Codigoficha)
         {
             try
             {
@@ -97,6 +105,7 @@ namespace Ebasproyecto.Controllers
                     Tipo = Tipo,
                     Nombre = Nombre,
                     Duracion = Duracion,
+                    FichaId = Codigoficha
                 };
 
                 collection.InsertOne(ProgramaFormacion);

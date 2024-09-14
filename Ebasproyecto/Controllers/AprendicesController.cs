@@ -24,6 +24,15 @@ namespace Ebasproyecto.Controllers
             var database = cn.GetDatabase("Ebas");
             var collection = database.GetCollection<Usuarios>("Usuarios");
             List<Usuarios> List = collection.Find(d => d.TipoUsuario == "Aprendiz").ToList(); // Filtrar por TipoUsuario = "Aprendiz"
+
+            var collection1 = database.GetCollection<Fichas>("Fichas");
+
+            var fichas = collection1.Find(d => true).ToList();
+            ViewBag.Fichas = new SelectList(fichas.Select(c => new
+            {
+                Id = c.Id,
+                Codigo = c.Codigo = $"{c.Codigo}"
+            }), "Id", "Codigo");
             return View(List);
         }
         public ActionResult GenerarReporteUsuarios()
@@ -93,7 +102,7 @@ namespace Ebasproyecto.Controllers
     }
 
     [HttpPost]
-        public ActionResult Crear(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
+        public ActionResult Crear(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña, string Codigoficha)
         {
             try
             {
@@ -114,7 +123,8 @@ namespace Ebasproyecto.Controllers
                     Telefono = Telefono,
                     TipoPoblacion = TipoPoblacion,
                     TipoUsuario = TipoUsuario,
-                    Contraseña = Contraseña
+                    Contraseña = Contraseña,
+                    FichaId = Codigoficha
                 };
 
                 collection.InsertOne(Usuarios);

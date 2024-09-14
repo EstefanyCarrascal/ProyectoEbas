@@ -52,5 +52,7 @@ namespace Ebasproyecto.Model
         [BsonElement("Contraseña")]
         public string Contraseña { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string FichaId { get; set; }
     }
 }

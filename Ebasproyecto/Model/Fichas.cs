@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -27,5 +28,6 @@ namespace Ebasproyecto.Model
 
         [BsonElement("FechaFin")]
         public string FechaFin { get; set; }
+
     }
 }

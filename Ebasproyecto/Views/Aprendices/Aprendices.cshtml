@@ -70,7 +70,7 @@
                     <th scope="col">Tipo de población</th>
                     <th scope="col">Tipo de usuario</th>
                     <th scope="col">Contraseña</th>
-                    <th scope="col"></th>
+                    <th scope="col">Código Ficha</th>
                 </tr>
             </thead>
             @foreach (var list in Model)
@@ -91,6 +91,8 @@
                         <td>@list.TipoPoblacion</td>
                         <td>@list.TipoUsuario</td>
                         <td>@list.Contraseña</td>
+                        <td>@list.FichaId</td>
+
                         <td>
                             <button onclick="Editar(event, '@list.Id.ToString()', '@list.Nombres', '@list.Apellidos', '@list.Documento', '@list.TipoDocumento', '@list.Correo', '@list.Sexo', '@list.Edad', '@list.Municipio', '@list.Direccion', '@list.EstadoCivil', '@list.Telefono', '@list.TipoPoblacion', '@list.TipoUsuario', '@list.Contraseña')">&#x270F; Editar</button>
                             <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
@@ -176,6 +178,19 @@
                 <div class="mb-3">
                     <label for="Contraseña" class="form-label">Contraseña</label>
                     <input id="Contraseña" type="password" name="Contraseña" class="form-control" placeholder="Ingrese su contraseña" required />
+                </div>
+                <div class="mb-3">
+                    <label for="Tipo" class="form-label">Ficha</label>
+                    <select id="fichas" name="Codigoficha" class="form-control" placeholder="Seleccione ficha">
+                        <option value="">Selecciona Asignaturas</option>
+                        @if (ViewBag.Fichas != null)
+                        {
+                            foreach (var asig in ViewBag.Fichas)
+                            {
+                                <option value="@asig.Value">@asig.Text</option>
+                            }
+                        }
+                    </select>
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-secondary btn-block">Crear</button>
