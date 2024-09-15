@@ -7,11 +7,48 @@
 
 <h3>Firma Digital</h3>
 
+<!-- Agregar SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @if (!string.IsNullOrEmpty(mensaje))
 {
-    <div class="alert alert-info">
-        @mensaje
-    </div>
+    <script>
+        Swal.fire({
+            icon: 'info', // Usamos el icono de información
+            title: '<strong>Tú asistencia ha sido registrada antes ha este evento.</strong>',
+            html: '<strong>No puedes volver a registrar nuevamente tú asistencia en el mismo evento.</strong>',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#28a745',
+            customClass: {
+                icon: 'custom-info-icon', // Clase personalizada para el icono
+                title: 'custom-title',
+                htmlContainer: 'custom-html'
+            }
+        });
+    </script>
+
+    <style>
+        /* Cambiar el color del icono de información y el círculo que lo rodea */
+        .swal2-info {
+            color: #ffd700 !important; /* Hacer el icono amarillo */
+        }
+
+        .swal2-icon.swal2-info {
+            border-color: #ffd700 !important; /* Cambiar el color del círculo que rodea el icono a amarillo */
+        }
+
+
+        .custom-title {
+            color: black;
+            font-weight: bold;
+        }
+
+        .custom-html {
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+
 }
 
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
@@ -84,8 +121,8 @@
     </div>
     <br />
     <div>
-        <button id="clearButton">Limpiar</button>
-        <button id="saveButton">Guardar registro</button>
+        <button id="clearButton" class="btn-custom">Limpiar</button>
+        <button id="saveButton" class="btn-custom">Guardar registro</button>
     </div>
 </div>
 
@@ -98,6 +135,25 @@
 </form>
 
 <a id="backButton" class="btn btn-secondary" href="@Url.Action("Index", "HomeAprendiz")" style="position: absolute; bottom: 20px; right: 20px;">Volver</a>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (TempData["Mensaje"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success', // Icono de éxito
+            title: '¡Éxito!',
+            text: '@TempData["Mensaje"]', // Mostrar el mensaje de TempData
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#28a745' // Mantener el botón verde
+        });
+    </script>
+}
+
+
+
+<!-- Agregar SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <script>
     const canvas = document.getElementById('canvas');
@@ -153,9 +209,8 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 
-    document.getElementById('saveButton').addEventListener('click', function () {
+    document.getElementById('saveButton').addEventListener('click', function (e) {
         const dataURL = canvas.toDataURL('image/png');
-      
 
         // Crear un canvas vacío para comparar
         const emptyCanvas = document.createElement('canvas');
@@ -165,12 +220,46 @@
 
         // Comprobar si el contenido del canvas es igual al canvas vacío
         if (dataURL === emptyCanvas.toDataURL('image/png')) {
-            alert('No se ha recibido la firma. Por favor, firme antes de guardar.');
+            Swal.fire({
+                icon: 'warning',
+                title: '<strong>Firma no recibida</strong>',
+                html: '<strong>Por favor, firme antes de guardar.</strong>',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#28a745',
+                customClass: {
+                    icon: 'custom-warning-icon', // Añadir una clase personalizada para el icono
+                    title: 'custom-title',
+                    htmlcontainer: 'custom-html'
+                }
+            });
             e.preventDefault(); // Evitar que el formulario se envíe
             return; // Detener la ejecución si el canvas está vacío
         }
 
         document.getElementById('firmaData').value = dataURL;
         document.getElementById('firmaForm').submit();
+
     });
+
+    // Cambiar el color del icono de advertencia y el círculo que lo rodea
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .swal2-warning {
+            color: #e60000 !important; /* Hacer el icono más rojo */
+        }
+        .swal2-icon.swal2-warning {
+            border-color: #e60000 !important; /* Cambiar el color del círculo que rodea el icono a rojo */
+        }
+
+         .custom-title {
+         color: black;
+        font-weight: bold;
+    }
+
+        .custom-html {
+        color: black;
+        font-weight: bold;
+    }
+    `;
+    document.head.appendChild(style);
 </script>

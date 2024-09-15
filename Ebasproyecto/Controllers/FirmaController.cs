@@ -39,7 +39,7 @@ namespace Ebasproyecto.Controllers
             if (asistenciaExistente != null)
             {
                 // Si ya existe un registro de asistencia, mostrar mensaje de error
-                TempData["Mensaje"] = "Ya has registrado tu asistencia en este evento.";
+                TempData["Mensaje"] = "Ya has registrado tu asistencia anteriormente en este evento.";
                 return RedirectToAction("Firma", new { Id = eventoId });
             }
 
