@@ -49,9 +49,26 @@
 <body>
 
     <button onclick="User(event)" id="openModalBtn">Crear</button>
-    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("GenerarReporteUsuarios", "Aprendices")'" id="BottomPdf">
+    <button type="button" class="btn-custom" onclick="window.location.href='@Url.Action("GenerarReporteUsuarios", "Aprendices")'" id="BottomPdf">
         Generar Reporte PDF
     </button>
+    <style>
+        .btn-custom {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold; /* Texto en negrita */
+        }
+
+            .btn-custom:hover {
+                background-color: #218838; /* Color más oscuro para el hover */
+            }
+    </style>
+
     <div class="table-responsive">
         <table class="table">
             <thead class="thead-dark">
@@ -198,7 +215,7 @@
             </form>
         </div>
     </div>
- 
+
     <!-- Modal para Editar Personal Administrativo -->
     <div id="Editar" class="modal">
         <div class="modal-content">

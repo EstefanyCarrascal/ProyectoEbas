@@ -53,7 +53,7 @@
 
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-bottom: 20px;">
     <h4>Información del Usuario</h4>
-    <table class="table table-bordered" style="width: 80%;">
+    <table class="table table-striped">
         <tbody>
             <tr>
                 <th>Nombres</th>
@@ -111,6 +111,7 @@
                 <th>Nombre del Evento</th>
                 <td>@ViewBag.EventoNombre</td>
             </tr>
+
         </tbody>
     </table>
 </div>
@@ -120,10 +121,26 @@
         <canvas id="canvas" style="border: 1px solid #ddd;"></canvas>
     </div>
     <br />
-    <div>
-        <button id="clearButton" class="btn-custom">Limpiar</button>
-        <button id="saveButton" class="btn-custom">Guardar registro</button>
-    </div>
+   <div>
+    <button id="clearButton" class="btn-custom">Limpiar</button>
+    <button id="saveButton" class="btn-custom">Guardar registro</button>
+</div>
+
+<style>
+    .btn-custom {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .btn-custom:hover {
+        background-color: #218838; /* Color más oscuro para el hover */
+    }
+</style>
 </div>
 
 <form id="firmaForm" method="post" action="/Firma/GuardarFirma">
