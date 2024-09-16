@@ -28,8 +28,8 @@
                     <td>@evento.Descripcion</td>
                     <td>@evento.Organizador</td>
                     <td>@evento.FechaEvento</td>
-                    <td>@evento.HoraInicio</td>
-                    <td>@evento.HoraFin</td>
+                    <td>@DateTime.Parse(evento.HoraInicio).ToString("hh:mm tt")</td> <!-- Formato AM/PM -->
+                    <td>@DateTime.Parse(evento.HoraFin).ToString("hh:mm tt")</td> <!-- Formato AM/PM -->
                     <td>
                         <a class="btn btn-secondary" href="@Url.Action("Firma","Firma", new {id = evento.Id})">Registrar Asistencia</a>
                     </td>

@@ -25,8 +25,5 @@ namespace Ebasproyecto.Model
 
         [BsonElement("Duracion")]
         public string Duracion { get; set; }
-
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string FichaId { get; set; }
     }
 }

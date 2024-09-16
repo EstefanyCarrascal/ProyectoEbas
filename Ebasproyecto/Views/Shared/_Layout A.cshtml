@@ -49,6 +49,10 @@
                 color: black;
                 text-decoration: none;
             }
+
+        .sb-topnav .navbar-nav {
+            margin-left: auto; /* Asegura que los elementos de la navegación estén alineados a la derecha */
+        }
     </style>
 </head>
 <body class="sb-nav-fixed">
@@ -57,15 +61,8 @@
         <a class="navbar-brand ps-3" href="index.html" style="font-weight: bold; font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase;">Ebas</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-            </div>
-        </form>
         <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <ul class="navbar-nav ms-auto me-3 me-lg-4">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -76,6 +73,8 @@
             </li>
         </ul>
     </nav>
+
+
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -156,31 +155,8 @@
                     <input id="EditarSexo" type="text" name="Sexo" class="form-control" placeholder="Ingrese su sexo" required />
                 </div>
                 <div class="mb-3">
-                    <label for="EditarEdad" class="form-label">Edad</label>
-                    <input id="EditarEdad" type="text" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
-                </div>
-                <div class="mb-3">
-                    <label for="EditarEstadoCivil" class="form-label">Estado civil</label>
-                    <input id="EditarEstadoCivil" type="text" name="EstadoCivil" class="form-control" placeholder="Ingrese su estado civil" required />
-                </div>
-                <div class="mb-3">
-                    <label for="EditarMunicipio" class="form-label">Municipio</label>
-                    <input id="EditarMunicipio" type="text" name="Municipio" class="form-control" placeholder="Ingrese su municipio" required />
-                </div>
-                <div class="mb-3">
-                    <label for="EditarDireccion" class="form-label">Dirección</label>
-                    <input id="EditarDireccion" type="text" name="Direccion" class="form-control" placeholder="Ingrese su dirección" required />
-                </div>
-                <div class="mb-3">
                     <label for="EditarTipoPoblacion" class="form-label">Tipo de población</label>
                     <input id="EditarTipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su tipo de población" required />
-                </div>
-                <div class="mb-3">
-                    <label for="EditarTipoUsuario" class="form-label">Tipo de usuario</label>
-                    <select id="EditarTipoUsuario" name="TipoUsuario" class="form-control" placeholder="Seleccione su tipo de usuario">
-                        <option value="PersonalAdministrativo">Personal Administrativo</option>
-                        <option value="Aprendiz">Aprendiz</option>
-                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="EditarContraseña" class="form-label">Contraseña</label>
@@ -213,13 +189,8 @@
                 document.getElementById('EditarTelefono').value = data.Telefono;
                 document.getElementById('EditarCorreo').value = data.Correo;
                 document.getElementById('EditarSexo').value = data.Sexo;
-                document.getElementById('EditarEdad').value = data.Edad;
-                document.getElementById('EditarMunicipio').value = data.Municipio;
-                document.getElementById('EditarDireccion').value = data.Direccion;
-                document.getElementById('EditarEstadoCivil').value = data.EstadoCivil;
                 document.getElementById('EditarTipoDocumento').value = data.TipoDocumento;
                 document.getElementById('EditarTipoPoblacion').value = data.TipoPoblacion;
-                document.getElementById('EditarTipoUsuario').value = data.TipoUsuario;
                 document.getElementById('EditarContraseña').value = data.Contraseña;
                 document.getElementById('Editar').style.display = 'flex';
             } else {

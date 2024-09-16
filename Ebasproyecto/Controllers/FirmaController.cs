@@ -24,13 +24,13 @@ namespace Ebasproyecto.Controllers
             _usuarioCollection = database.GetCollection<Usuarios>("Usuarios");
             _eventoCollection = database.GetCollection<Evento>("Evento");
             _asistenciaCollection = database.GetCollection<RegistroAsistencia>("RegistroAsistencia");
-         
+
         }
 
 
 
         [HttpPost]
-        public async Task<ActionResult> GuardarFirma(string firmaData, string usuarioId, string eventoId, string nombres,string nombreevento)
+        public async Task<ActionResult> GuardarFirma(string firmaData, string usuarioId, string eventoId, string nombres, string nombreevento)
         {   // Verificar si el usuario ya ha registrado asistencia para el evento
             var asistenciaExistente = await _asistenciaCollection
                 .Find(a => a.UsuarioId == usuarioId && a.EventoId == eventoId)
@@ -170,13 +170,13 @@ namespace Ebasproyecto.Controllers
             ViewBag.Telefono = usuario.Telefono;
             ViewBag.Correo = usuario.Correo;
             ViewBag.Sexo = usuario.Sexo;
-            ViewBag.Edad = usuario.Edad;
-            ViewBag.Municipio = usuario.Municipio;
-            ViewBag.Direccion = usuario.Direccion;
-            ViewBag.EstadoCivil = usuario.EstadoCivil;
             ViewBag.TipoDocumento = usuario.TipoDocumento;
             ViewBag.TipoPoblacion = usuario.TipoPoblacion;
-            ViewBag.TipoUsuario = usuario.TipoUsuario;
+            ViewBag.TipoPoblacion = usuario.TipoPoblacion;
+            ViewBag.CodigoFicha = usuario.CodigoFicha;
+            ViewBag.ProgramaNombre = usuario.ProgramaNombre;
+
+
 
             // Pasar los IDs del usuario y del evento
             ViewBag.UsuarioId = usuario.Id.ToString();

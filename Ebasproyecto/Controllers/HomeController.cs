@@ -23,25 +23,20 @@ namespace Ebasproyecto.Controllers
         public ActionResult Index()
         {
             var totaleventos = _context.Evento.CountDocuments(_ => true);
-
             ViewBag.totalevento = totaleventos;
 
-            var totaladministrativo = _context.Users.CountDocuments(_ => true);
-
+            var totaladministrativo = _context.Users.CountDocuments(user => user.TipoUsuario == "PersonalAdministrativo");
             ViewBag.totaladministrativo = totaladministrativo;
 
+            var totalregistrofirma = _context.Firma.CountDocuments(_ => true);
+            ViewBag.totalregistrofirma = totalregistrofirma;
 
-            var totalregistro = _context.RegistroAsistencia.CountDocuments(_ => true);
-
-            ViewBag.totalregistro = totalregistro;
-
-
-            var totalaprendices = _context.Users.CountDocuments(_ => true);
-
+            var totalaprendices = _context.Users.CountDocuments(user => user.TipoUsuario == "Aprendiz");
             ViewBag.totalaprendices = totalaprendices;
 
             return View();
         }
+
 
         [HttpPost]
         public ActionResult Editar(
@@ -51,10 +46,6 @@ namespace Ebasproyecto.Controllers
             string TipoDocumento,
             string Correo,
             string Sexo,
-            string Edad,
-            string Municipio,
-            string Direccion,
-            string EstadoCivil,
             string Telefono,
             string TipoPoblacion,
             string TipoUsuario,
@@ -84,10 +75,6 @@ namespace Ebasproyecto.Controllers
                 usuario.TipoDocumento = TipoDocumento;
                 usuario.Correo = Correo;
                 usuario.Sexo = Sexo;
-                usuario.Edad = Edad;
-                usuario.Municipio = Municipio;
-                usuario.Direccion = Direccion;
-                usuario.EstadoCivil = EstadoCivil;
                 usuario.Telefono = Telefono;
                 usuario.TipoPoblacion = TipoPoblacion;
                 usuario.TipoUsuario = TipoUsuario;

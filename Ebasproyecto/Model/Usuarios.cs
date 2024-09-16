@@ -28,18 +28,6 @@ namespace Ebasproyecto.Model
         [BsonElement("Sexo")]
         public string Sexo { get; set; }
 
-        [BsonElement("Edad")]
-        public string Edad { get; set; }
-
-        [BsonElement("Municipio")]
-        public string Municipio { get; set; }
-
-        [BsonElement("Direccion")]
-        public string Direccion { get; set; }
-
-        [BsonElement("EstadoCivil")]
-        public string EstadoCivil { get; set; }
-
         [BsonElement("TipoDocumento")]
         public string TipoDocumento { get; set; }
 
@@ -54,5 +42,12 @@ namespace Ebasproyecto.Model
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string FichaId { get; set; }
+        public string CodigoFicha { get; set; } // Agregar este campo
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string ProgramaId { get; set; } // Agregar campo para el programa de formación
+        public string ProgramaNombre { get; set; } // Agregado para el nombre del programa
+
+
     }
 }

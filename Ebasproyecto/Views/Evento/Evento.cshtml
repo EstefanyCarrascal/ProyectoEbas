@@ -4,7 +4,7 @@
     ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -89,8 +89,8 @@
                         <td>@list.Descripcion</td>
                         <td>@list.Organizador</td>
                         <td>@list.FechaEvento</td>
-                        <td>@list.HoraInicio</td>
-                        <td>@list.HoraFin</td>
+                        <td>@DateTime.Parse(list.HoraInicio).ToString("hh:mm tt")</td> <!-- Formato AM/PM -->
+                        <td>@DateTime.Parse(list.HoraFin).ToString("hh:mm tt")</td> <!-- Formato AM/PM -->
                         <td>
                             <button onclick="Editar(event, '@list.Id.ToString()', '@list.NombreEvento', '@list.Descripcion', '@list.Organizador', '@list.FechaEvento','@list.HoraInicio', '@list.HoraFin')">&#x270F; Editar</button>
                             <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
@@ -236,6 +236,17 @@
         function Cerrar() {
             deleteModal.style.display = "none";
         }
+
+        document.querySelector("form").addEventListener("submit", function (event) {
+            var horaInicio = document.getElementById("HoraInicio").value;
+            var horaFin = document.getElementById("HoraFin").value;
+
+            if (horaFin <= horaInicio) {
+                alert("La hora de fin debe ser después de la hora de inicio.");
+                event.preventDefault();
+            }
+        });
+
     </script>
 </body>
 </html>

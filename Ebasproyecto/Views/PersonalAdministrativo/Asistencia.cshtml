@@ -8,6 +8,27 @@
 
 <h2>Asistencia</h2>
 
+<button type="button" class="btn-custom" onclick="window.location.href='@Url.Action("GenerarReporteAsistencia", "PersonalAdministrativo")'" id="BottomPdf">
+    Generar Reporte PDF
+</button>
+<style>
+    .btn-custom {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold; /* Texto en negrita */
+    }
+
+        .btn-custom:hover {
+            background-color: #218838; /* Color más oscuro para el hover */
+        }
+</style>
+
+
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -27,7 +48,7 @@
                 <td>@item.NombreEvento</td>
                 <td>@(item.Asistio ? "Sí" : "No")</td>
                 <td>@item.Fecha</td>
-                <td>@item.Hora</td>
+                <td>@DateTime.Parse(item.Hora).ToString("hh:mm tt")</td> <!-- Formato AM/PM -->
             </tr>
         }
     </tbody>

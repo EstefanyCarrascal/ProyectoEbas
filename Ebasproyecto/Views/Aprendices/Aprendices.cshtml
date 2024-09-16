@@ -49,7 +49,7 @@
 <body>
 
     <button onclick="User(event)" id="openModalBtn">Crear</button>
-    <button type="button" class="btn-custom" onclick="window.location.href='@Url.Action("GenerarReporteUsuarios", "Aprendices")'" id="BottomPdf">
+    <button type="button" class="btn-custom" onclick="window.location.href='@Url.Action("GenerarReporteAprendices", "Aprendices")'" id="BottomPdf">
         Generar Reporte PDF
     </button>
     <style>
@@ -80,19 +80,16 @@
                     <th scope="col">Correo</th>
                     <th scope="col">Teléfono</th>
                     <th scope="col">Sexo</th>
-                    <th scope="col">Edad</th>
-                    <th scope="col">Estado Civil</th>
-                    <th scope="col">Municipio</th>
-                    <th scope="col">Dirección</th>
                     <th scope="col">Tipo de población</th>
                     <th scope="col">Tipo de usuario</th>
                     <th scope="col">Contraseña</th>
                     <th scope="col">Código Ficha</th>
+                    <th scope="col">Programa de Formación</th>
                 </tr>
             </thead>
-            @foreach (var list in Model)
-            {
-                <tbody>
+            <tbody>
+                @foreach (var list in Model)
+                {
                     <tr>
                         <td>@list.Nombres</td>
                         <td>@list.Apellidos</td>
@@ -101,23 +98,20 @@
                         <td>@list.Correo</td>
                         <td>@list.Telefono</td>
                         <td>@list.Sexo</td>
-                        <td>@list.Edad</td>
-                        <td>@list.EstadoCivil</td>
-                        <td>@list.Municipio</td>
-                        <td>@list.Direccion</td>
                         <td>@list.TipoPoblacion</td>
                         <td>@list.TipoUsuario</td>
                         <td>@list.Contraseña</td>
-                        <td>@list.FichaId</td>
-
+                        <td>@list.CodigoFicha</td>
+                        <td>@list.ProgramaNombre</td>
                         <td>
-                            <button onclick="Editar(event, '@list.Id.ToString()', '@list.Nombres', '@list.Apellidos', '@list.Documento', '@list.TipoDocumento', '@list.Correo', '@list.Sexo', '@list.Edad', '@list.Municipio', '@list.Direccion', '@list.EstadoCivil', '@list.Telefono', '@list.TipoPoblacion', '@list.TipoUsuario', '@list.Contraseña')">&#x270F; Editar</button>
+                            <button onclick="Editar(event, '@list.Id.ToString()', '@list.Nombres', '@list.Apellidos', '@list.Documento', '@list.TipoDocumento', '@list.Correo', '@list.Sexo', '@list.Telefono', '@list.TipoPoblacion', '@list.TipoUsuario', '@list.Contraseña')">&#x270F; Editar</button>
                             <button onclick="Eliminar(event, '@list.Id.ToString()')">&#x1F5D1; Eliminar</button>
                         </td>
                     </tr>
-                </tbody>
-            }
+                }
+            </tbody>
         </table>
+
     </div>
 
     <!-- Modal para Crear Nuevo Personal Administrativo -->
@@ -161,36 +155,8 @@
                     <input id="Sexo" type="text" name="Sexo" class="form-control" placeholder="Ingrese su sexo" required />
                 </div>
                 <div class="mb-3">
-                    <label for="Edad" class="form-label">Edad</label>
-                    <input id="Edad" type="number" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
-                </div>
-                <div class="mb-3">
-                    <label for="EstadoCivil" class="form-label">Estado Civil</label>
-                    <select id="EstadoCivil" name="EstadoCivil" class="form-control" placeholder="Seleccione su estado civil">
-                        <option value="Casado(a)">Casado(a)</option>
-                        <option value="Soltero(a)">Soltero(a)</option>
-                        <option value="Viudo(a)">Viudo(a)</option>
-                        <option value="Únion Libre">Únion Libre</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="Municipio" class="form-label">Municipio</label>
-                    <input id="Municipio" type="text" name="Municipio" class="form-control" placeholder="Ingrese el municipio donde vive " required />
-                </div>
-                <div class="mb-3">
-                    <label for="Direccion" class="form-label">Dirección</label>
-                    <input id="Direccion" type="text" name="Direccion" class="form-control" placeholder="Ingrese su dirección" required />
-                </div>
-                <div class="mb-3">
                     <label for="TipoPoblacion" class="form-label">Tipo de población</label>
                     <input id="TipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su tipo de población " required />
-                </div>
-                <div class="mb-3">
-                    <label for="TipoUsuario" class="form-label">Tipo de Usuario</label>
-                    <select id="TipoUsuario" name="TipoUsuario" class="form-control" placeholder="Seleccione su tipo de usuario">
-                        <option value="PersonalAdministrativo">Personal Administrativo</option>
-                        <option value="Aprendiz">Aprendiz</option>
-                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="Contraseña" class="form-label">Contraseña</label>
@@ -199,12 +165,25 @@
                 <div class="mb-3">
                     <label for="Tipo" class="form-label">Ficha</label>
                     <select id="fichas" name="Codigoficha" class="form-control" placeholder="Seleccione ficha">
-                        <option value="">Selecciona Asignaturas</option>
+                        <option value="">Selecciona ficha</option>
                         @if (ViewBag.Fichas != null)
                         {
                             foreach (var asig in ViewBag.Fichas)
                             {
                                 <option value="@asig.Value">@asig.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="Programa" class="form-label">Programa de Formación</label>
+                    <select id="programas" name="ProgramaId" class="form-control" placeholder="Seleccione programa">
+                        <option value="">Selecciona programa</option>
+                        @if (ViewBag.Programas != null)
+                        {
+                            foreach (var prog in ViewBag.Programas)
+                            {
+                                <option value="@prog.Value">@prog.Text</option>
                             }
                         }
                     </select>
@@ -257,37 +236,10 @@
                     <label for="EditarSexo" class="form-label">Sexo</label>
                     <input id="EditarSexo" type="text" name="Sexo" class="form-control" placeholder="Ingrese su sexo" required />
                 </div>
-                <div class="mb-3">
-                    <label for="EditarEdad" class="form-label">Edad</label>
-                    <input id="EditarEdad" type="text" name="Edad" class="form-control" placeholder="Ingrese su edad" required />
-                </div>
-                <div class="mb-3">
-                    <label for="EditarEstadoCivil" class="form-label">Estado Civil</label>
-                    <select id="EditarEstadoCivil" name="EstadoCivil" class="form-control" placeholder="Seleccione su estado civil">
-                        <option value="Casado(a)">Casado(a)</option>
-                        <option value="Soltero(a)">Soltero(a)</option>
-                        <option value="Viudo(a)">Viudo(a)</option>
-                        <option value="Únion Libre">Únion Libre</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="EditarMunicipio" class="form-label">Municipio</label>
-                    <input id="EditarMunicipio" type="text" name="Municipio" class="form-control" placeholder="Ingrese el municipio donde vive " required />
-                </div>
-                <div class="mb-3">
-                    <label for="EditarDireccion" class="form-label">Dirección</label>
-                    <input id="EditarDireccion" type="text" name="Direccion" class="form-control" placeholder="Ingrese su dirección" required />
-                </div>
+
                 <div class="mb-3">
                     <label for="EditarTipoPoblacion" class="form-label">Tipo de población</label>
                     <input id="EditarTipoPoblacion" type="text" name="TipoPoblacion" class="form-control" placeholder="Ingrese su Tipo de población " required />
-                </div>
-                <div class="mb-3">
-                    <label for="EditarTipoUsuario" class="form-label">Tipo de Usuario</label>
-                    <select id="EditarTipoUsuario" name="TipoUsuario" class="form-control" placeholder="Seleccione su tipo de usuario">
-                        <option value="PersonalAdministrativo">Personal Administrativo</option>
-                        <option value="Aprendiz">Aprendiz</option>
-                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="EditarContraseña" class="form-label">Contraseña</label>
@@ -339,7 +291,7 @@
         var editModal = document.getElementById("Editar");
         var closeEditModalBtn = document.getElementById("closeEditModalBtn");
 
-        function Editar(event, id, Nombres, Apellidos, Documento, TipoDocumento, Correo, Sexo, Edad, Municipio, Direccion, EstadoCivil, Telefono, TipoPoblacion, TipoUsuario, Contraseña) {
+        function Editar(event, id, Nombres, Apellidos, Documento, TipoDocumento, Correo, Sexo, Telefono, TipoPoblacion, TipoUsuario, Contraseña) {
             event.preventDefault();
             document.getElementById("EditarId").value = id;
             document.getElementById("EditarNombres").value = Nombres;
@@ -348,13 +300,8 @@
             document.getElementById("EditarTipoDocumento").value = TipoDocumento;
             document.getElementById("EditarCorreo").value = Correo;
             document.getElementById("EditarSexo").value = Sexo;
-            document.getElementById("EditarEdad").value = Edad;
-            document.getElementById("EditarMunicipio").value = Municipio;
-            document.getElementById("EditarDireccion").value = Direccion;
-            document.getElementById("EditarEstadoCivil").value = EstadoCivil;
             document.getElementById("EditarTelefono").value = Telefono;
             document.getElementById("EditarTipoPoblacion").value = TipoPoblacion;
-            document.getElementById("EditarTipoUsuario").value = TipoUsuario;
             document.getElementById("EditarContraseña").value = Contraseña;
             editModal.style.display = "block";
         }

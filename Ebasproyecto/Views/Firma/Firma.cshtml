@@ -80,22 +80,6 @@
                 <td>@ViewBag.Sexo</td>
             </tr>
             <tr>
-                <th>Edad</th>
-                <td>@ViewBag.Edad</td>
-            </tr>
-            <tr>
-                <th>Municipio</th>
-                <td>@ViewBag.Municipio</td>
-            </tr>
-            <tr>
-                <th>Dirección</th>
-                <td>@ViewBag.Direccion</td>
-            </tr>
-            <tr>
-                <th>Estado Civil</th>
-                <td>@ViewBag.EstadoCivil</td>
-            </tr>
-            <tr>
                 <th>Tipo de Documento</th>
                 <td>@ViewBag.TipoDocumento</td>
             </tr>
@@ -104,8 +88,12 @@
                 <td>@ViewBag.TipoPoblacion</td>
             </tr>
             <tr>
-                <th>Tipo de Usuario</th>
-                <td>@ViewBag.TipoUsuario</td>
+                <th>Código Ficha</th>
+                <td>@ViewBag.CodigoFicha</td>
+            </tr>
+            <tr>
+                <th>Nombre Programa</th>
+                <td>@ViewBag.ProgramaNombre</td>
             </tr>
             <tr>
                 <th>Nombre del Evento</th>
@@ -121,26 +109,26 @@
         <canvas id="canvas" style="border: 1px solid #ddd;"></canvas>
     </div>
     <br />
-   <div>
-    <button id="clearButton" class="btn-custom">Limpiar</button>
-    <button id="saveButton" class="btn-custom">Guardar registro</button>
-</div>
+    <div>
+        <button id="clearButton" class="btn-custom">Limpiar</button>
+        <button id="saveButton" class="btn-custom">Guardar registro</button>
+    </div>
 
-<style>
-    .btn-custom {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
+    <style>
+        .btn-custom {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
 
-    .btn-custom:hover {
-        background-color: #218838; /* Color más oscuro para el hover */
-    }
-</style>
+            .btn-custom:hover {
+                background-color: #218838; /* Color más oscuro para el hover */
+            }
+    </style>
 </div>
 
 <form id="firmaForm" method="post" action="/Firma/GuardarFirma">

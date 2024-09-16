@@ -9,6 +9,7 @@ using Ebasproyecto.Model;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using System.IO;
+using System.Globalization;
 
 namespace Ebasproyecto.Controllers
 {
@@ -32,7 +33,7 @@ namespace Ebasproyecto.Controllers
             var collection = database.GetCollection<Usuarios>("Usuarios");
 
             // Obtener todos los usuarios de la base de datos
-            var usuarios = collection.Find(d => d.TipoUsuario == "PersonalAdministrativo").ToList();
+            var usuarios = collection.Find(d => d.TipoUsuario == "PersonalAdministrativo").ToList(); // Filtrar por TipoUsuario = "Aprendiz"
 
             // Crear el documento PDF
             Document documentoPDF = new Document(PageSize.A4);
@@ -42,44 +43,40 @@ namespace Ebasproyecto.Controllers
             documentoPDF.Open();
 
             // Título del documento
-            Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
-            Paragraph titulo = new Paragraph("Reporte de Administrativos", tituloFont)
+            Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14);
+            Paragraph titulo = new Paragraph("Reporte de Usuarios", tituloFont)
             {
                 Alignment = Element.ALIGN_CENTER
             };
             documentoPDF.Add(titulo);
             documentoPDF.Add(new Paragraph("\n")); // Espacio
 
-            // Crear tabla con 10 columnas para las propiedades del usuario
-            PdfPTable tabla = new PdfPTable(10)
+            // Crear tabla con 7 columnas para las propiedades de los usuarios
+            PdfPTable tabla = new PdfPTable(7)
             {
                 WidthPercentage = 100
             };
-            tabla.SetWidths(new float[] { 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f });
+            tabla.SetWidths(new float[] { 2f, 2f, 2f, 2f, 3f, 1f, 2f }); // Ajuste de ancho de columnas
 
             // Encabezados de la tabla
-            tabla.AddCell("Nombres");
-            tabla.AddCell("Apellidos");
-            tabla.AddCell("Documento");
-            tabla.AddCell("Teléfono");
-            tabla.AddCell("Correo");
-            tabla.AddCell("Sexo");
-            tabla.AddCell("Edad");
-            tabla.AddCell("Municipio");
-            tabla.AddCell("Estado Civil");
+            tabla.AddCell(new PdfPCell(new Phrase("Nombres", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Apellidos", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Documento", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Teléfono", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Correo", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Sexo", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Tipo Población", tituloFont)));
 
             // Agregar datos de cada usuario a la tabla
             foreach (var usuario in usuarios)
             {
-                tabla.AddCell(usuario.Nombres);
-                tabla.AddCell(usuario.Apellidos);
-                tabla.AddCell(usuario.Documento);
-                tabla.AddCell(usuario.Telefono);
-                tabla.AddCell(usuario.Correo);
-                tabla.AddCell(usuario.Sexo);
-                tabla.AddCell(usuario.Edad);
-                tabla.AddCell(usuario.Municipio);
-                tabla.AddCell(usuario.EstadoCivil);
+                tabla.AddCell(usuario.Nombres ?? "N/A");
+                tabla.AddCell(usuario.Apellidos ?? "N/A");
+                tabla.AddCell(usuario.Documento ?? "N/A");
+                tabla.AddCell(usuario.Telefono ?? "N/A");
+                tabla.AddCell(usuario.Correo ?? "N/A");
+                tabla.AddCell(usuario.Sexo ?? "N/A");
+                tabla.AddCell(usuario.TipoPoblacion ?? "N/A");
             }
 
             // Añadir la tabla al documento PDF
@@ -94,8 +91,9 @@ namespace Ebasproyecto.Controllers
         }
 
 
+
         [HttpPost]
-        public ActionResult Crear(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo,string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
+        public ActionResult Crear(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
         {
             try
             {
@@ -109,13 +107,9 @@ namespace Ebasproyecto.Controllers
                     TipoDocumento = TipoDocumento,
                     Correo = Correo,
                     Sexo = Sexo,
-                    Edad = Edad,
-                    Municipio = Municipio,
-                    Direccion = Direccion,
-                    EstadoCivil = EstadoCivil,
                     Telefono = Telefono,
                     TipoPoblacion = TipoPoblacion,
-                    TipoUsuario = TipoUsuario,
+                    TipoUsuario = "PersonalAdministrativo",
                     Contraseña = Contraseña
                 };
 
@@ -131,7 +125,7 @@ namespace Ebasproyecto.Controllers
         }
 
         [HttpPost]
-        public ActionResult Editar(string objectId, string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña)
+        public ActionResult Editar(string objectId, string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Telefono, string TipoPoblacion, string Contraseña)
         {
             try
             {
@@ -152,13 +146,8 @@ namespace Ebasproyecto.Controllers
                     TipoDocumento = TipoDocumento,
                     Correo = Correo,
                     Sexo = Sexo,
-                    Edad = Edad,
-                    Municipio = Municipio,
-                    Direccion = Direccion,
-                    EstadoCivil = EstadoCivil,
                     Telefono = Telefono,
                     TipoPoblacion = TipoPoblacion,
-                    TipoUsuario = TipoUsuario,
                     Contraseña = Contraseña
                 };
 
@@ -214,6 +203,85 @@ namespace Ebasproyecto.Controllers
             return View(asistencias);
         }
 
+        public ActionResult GenerarReporteAsistencia()
+        {
+            // Configuración de la conexión a MongoDB
+            var client = new MongoClient("mongodb://localhost:27017/");
+            var database = client.GetDatabase("Ebas");
+            var asistenciaCollection = database.GetCollection<RegistroAsistencia>("RegistroAsistencia");
 
+            // Obtener asistencias donde el usuario asistió
+            var asistencias = asistenciaCollection.Find(a => a.Asistio == true).ToList();
+
+            // Crear el documento PDF
+            Document documentoPDF = new Document(PageSize.A4);
+            MemoryStream stream = new MemoryStream();
+            PdfWriter.GetInstance(documentoPDF, stream).CloseStream = false;
+
+            documentoPDF.Open();
+
+            // Título del documento
+            Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+            Paragraph titulo = new Paragraph("Reporte de Asistencia", tituloFont)
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
+            documentoPDF.Add(titulo);
+            documentoPDF.Add(new Paragraph("\n")); // Espacio
+
+            // Crear tabla con las columnas necesarias
+            PdfPTable tabla = new PdfPTable(4) // Se eliminó la columna para la hora
+            {
+                WidthPercentage = 100
+            };
+            tabla.SetWidths(new float[] { 2f, 2f, 2f, 2f });
+
+            // Encabezados de la tabla
+            tabla.AddCell("Nombre del Usuario");
+            tabla.AddCell("Evento");
+            tabla.AddCell("Fecha de Asistencia");
+            tabla.AddCell("Asistió");
+
+            // Obtener la colección de usuarios y eventos
+            var usuarioCollection = database.GetCollection<Usuarios>("Usuarios");
+            var eventoCollection = database.GetCollection<Evento>("Evento");
+
+            // Agregar datos de cada asistencia a la tabla
+            foreach (var asistencia in asistencias)
+            {
+                var usuario = usuarioCollection.Find(u => u.Id == MongoDB.Bson.ObjectId.Parse(asistencia.UsuarioId)).FirstOrDefault();
+                var evento = eventoCollection.Find(e => e.Id == MongoDB.Bson.ObjectId.Parse(asistencia.EventoId)).FirstOrDefault();
+
+                // Asegúrate de que usuario y evento existan
+                if (usuario != null && evento != null)
+                {
+                    tabla.AddCell(usuario.Nombres);  // Ajusta según el modelo de Usuarios
+                    tabla.AddCell(evento.NombreEvento);    // Ajusta según el modelo de Eventos
+
+                    // Fecha de asistencia
+                    if (DateTime.TryParse(asistencia.Fecha, out DateTime fechaAsistencia))
+                    {
+                        tabla.AddCell(fechaAsistencia.ToString("dd/MM/yyyy")); // Mostrar solo la fecha
+                    }
+                    else
+                    {
+                        tabla.AddCell("Fecha no válida");
+                    }
+
+                    // Indicar si asistió
+                    tabla.AddCell(asistencia.Asistio ? "Sí" : "No");
+                }
+            }
+
+            // Añadir la tabla al documento PDF
+            documentoPDF.Add(tabla);
+
+            // Cerrar el documento
+            documentoPDF.Close();
+
+            // Devolver el PDF como archivo descargable
+            stream.Position = 0;
+            return File(stream, "application/pdf", "ReporteAsistencia.pdf");
+        }
     }
 }

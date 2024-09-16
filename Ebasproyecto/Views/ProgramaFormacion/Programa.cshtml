@@ -123,19 +123,6 @@
                     <label for="Duracion" class="form-label">Duración</label>
                     <input id="Duracion" type="text" name="Duracion" class="form-control" placeholder="Ingrese la duración del programa" required />
                 </div>
-                <div class="mb-3">
-                    <label for="Tipo" class="form-label">Ficha</label>
-                    <select id="fichas" name="Codigoficha" class="form-control" placeholder="Seleccione ficha">
-                        <option value="">Selecciona Asignaturas</option>
-                        @if (ViewBag.Fichas != null)
-                        {
-                            foreach (var asig in ViewBag.Fichas)
-                            {
-                                <option value="@asig.Value">@asig.Text</option>
-                            }
-                        }
-                    </select>
-                </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-secondary btn-block">Crear</button>
                 </div>

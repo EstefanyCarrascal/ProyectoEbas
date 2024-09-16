@@ -22,93 +22,114 @@ namespace Ebasproyecto.Controllers
         public ActionResult Aprendices()
         {
             var database = cn.GetDatabase("Ebas");
-            var collection = database.GetCollection<Usuarios>("Usuarios");
-            List<Usuarios> List = collection.Find(d => d.TipoUsuario == "Aprendiz").ToList(); // Filtrar por TipoUsuario = "Aprendiz"
+            var usuariosCollection = database.GetCollection<Usuarios>("Usuarios");
+            List<Usuarios> usuariosList = usuariosCollection.Find(d => d.TipoUsuario == "Aprendiz").ToList();
 
-            var collection1 = database.GetCollection<Fichas>("Fichas");
+            var fichasCollection = database.GetCollection<Fichas>("Fichas");
+            var fichasList = fichasCollection.Find(d => true).ToList();
+            var fichasDictionary = fichasList.ToDictionary(f => f.Id.ToString(), f => f.Codigo);
+            ViewBag.Fichas = new SelectList(fichasList, "Id", "Codigo");
 
-            var fichas = collection1.Find(d => true).ToList();
-            ViewBag.Fichas = new SelectList(fichas.Select(c => new
+            var programasCollection = database.GetCollection<ProgramaFormacion>("ProgramaFormacion");
+            var programasList = programasCollection.Find(d => true).ToList();
+            var programasDictionary = programasList.ToDictionary(p => p.Id.ToString(), p => p.Nombre);
+            ViewBag.Programas = new SelectList(programasList, "Id", "Nombre");
+
+            // Map the ficha code and program name to the users
+            var result = usuariosList.Select(u => new Usuarios
             {
-                Id = c.Id,
-                Codigo = c.Codigo = $"{c.Codigo}"
-            }), "Id", "Codigo");
-            return View(List);
+                Nombres = u.Nombres,
+                Apellidos = u.Apellidos,
+                Documento = u.Documento,
+                TipoDocumento = u.TipoDocumento,
+                Correo = u.Correo,
+                Telefono = u.Telefono,
+                Sexo = u.Sexo,
+                TipoPoblacion = u.TipoPoblacion,
+                TipoUsuario = u.TipoUsuario,
+                Contraseña = u.Contraseña,
+                CodigoFicha = fichasDictionary.ContainsKey(u.FichaId) ? fichasDictionary[u.FichaId] : "No asignado",
+                ProgramaNombre = programasDictionary.ContainsKey(u.ProgramaId) ? programasDictionary[u.ProgramaId] : "No asignado"
+            }).ToList();
+
+            return View(result);
         }
-        public ActionResult GenerarReporteUsuarios()
+
+
+        public ActionResult GenerarReporteAprendices()
         {
-        // Configuración de la conexión a MongoDB
-        var client = new MongoClient("mongodb://localhost:27017/");
-        var database = client.GetDatabase("Ebas");
-        var collection = database.GetCollection<Usuarios>("Usuarios");
+            // Configuración de la conexión a MongoDB
+            var client = new MongoClient("mongodb://localhost:27017/");
+            var database = client.GetDatabase("Ebas");
+            var collection = database.GetCollection<Usuarios>("Usuarios");
 
-        // Obtener todos los usuarios de la base de datos
-        var usuarios = collection.Find(d => d.TipoUsuario == "Aprendiz").ToList(); // Filtrar por TipoUsuario = "Aprendiz"
-
+            // Obtener todos los usuarios de la base de datos
+            var usuarios = collection.Find(d => d.TipoUsuario == "Aprendiz").ToList(); // Filtrar por TipoUsuario = "Aprendiz"
 
             // Crear el documento PDF
             Document documentoPDF = new Document(PageSize.A4);
-        MemoryStream stream = new MemoryStream();
-        PdfWriter.GetInstance(documentoPDF, stream).CloseStream = false;
+            MemoryStream stream = new MemoryStream();
+            PdfWriter.GetInstance(documentoPDF, stream).CloseStream = false;
 
-        documentoPDF.Open();
+            documentoPDF.Open();
 
-        // Título del documento
-        Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
-        Paragraph titulo = new Paragraph("Reporte de Usuarios", tituloFont)
-        {
-            Alignment = Element.ALIGN_CENTER
-        };
-        documentoPDF.Add(titulo);
-        documentoPDF.Add(new Paragraph("\n")); // Espacio
+            // Título del documento
+            Font tituloFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 13);
+            Paragraph titulo = new Paragraph("Reporte de Usuarios", tituloFont)
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
+            documentoPDF.Add(titulo);
+            documentoPDF.Add(new Paragraph("\n")); // Espacio
 
-        // Crear tabla con 7 columnas para las propiedades de los usuarios
-        PdfPTable tabla = new PdfPTable(7)
-        {
-            WidthPercentage = 100
-        };
-        tabla.SetWidths(new float[] { 2f, 2f, 2f, 2f, 2f, 2f, 2f });
+            // Crear tabla con 7 columnas para las propiedades de los usuarios
+            PdfPTable tabla = new PdfPTable(7)
+            {
+                WidthPercentage = 100
+            };
+            tabla.SetWidths(new float[] { 2f, 2f, 2f, 2f, 3f, 1f, 2f }); // Ajuste de ancho de columnas
 
-        // Encabezados de la tabla
-        tabla.AddCell("Nombres");
-        tabla.AddCell("Apellidos");
-        tabla.AddCell("Documento");
-        tabla.AddCell("Teléfono");
-        tabla.AddCell("Correo");
-        tabla.AddCell("Sexo");
-        tabla.AddCell("Edad");
+            // Encabezados de la tabla
+            tabla.AddCell(new PdfPCell(new Phrase("Nombres", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Apellidos", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Documento", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Teléfono", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Correo", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Sexo", tituloFont)));
+            tabla.AddCell(new PdfPCell(new Phrase("Tipo Población", tituloFont)));
 
-        // Agregar datos de cada usuario a la tabla
-        foreach (var usuario in usuarios)
-        {
-            tabla.AddCell(usuario.Nombres);
-            tabla.AddCell(usuario.Apellidos);
-            tabla.AddCell(usuario.Documento);
-            tabla.AddCell(usuario.Telefono);
-            tabla.AddCell(usuario.Correo);
-            tabla.AddCell(usuario.Sexo);
-            tabla.AddCell(usuario.Edad);
+            // Agregar datos de cada usuario a la tabla
+            foreach (var usuario in usuarios)
+            {
+                tabla.AddCell(usuario.Nombres ?? "N/A");
+                tabla.AddCell(usuario.Apellidos ?? "N/A");
+                tabla.AddCell(usuario.Documento ?? "N/A");
+                tabla.AddCell(usuario.Telefono ?? "N/A");
+                tabla.AddCell(usuario.Correo ?? "N/A");
+                tabla.AddCell(usuario.Sexo ?? "N/A");
+                tabla.AddCell(usuario.TipoPoblacion ?? "N/A");
+            }
+
+            // Añadir la tabla al documento PDF
+            documentoPDF.Add(tabla);
+
+            // Cerrar el documento
+            documentoPDF.Close();
+
+            // Devolver el PDF como archivo descargable
+            stream.Position = 0;
+            return File(stream, "application/pdf", "ReporteUsuarios.pdf");
         }
 
-        // Añadir la tabla al documento PDF
-        documentoPDF.Add(tabla);
 
-        // Cerrar el documento
-        documentoPDF.Close();
-
-        // Devolver el PDF como archivo descargable
-        stream.Position = 0;
-        return File(stream, "application/pdf", "ReporteUsuarios.pdf");
-    }
-
-    [HttpPost]
-        public ActionResult Crear(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Edad, string Municipio, string Direccion, string EstadoCivil, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña, string Codigoficha)
+        [HttpPost]
+        public ActionResult Crear(string Nombres, string Apellidos, string Documento, string TipoDocumento, string Correo, string Sexo, string Telefono, string TipoPoblacion, string TipoUsuario, string Contraseña, string Codigoficha, string ProgramaId)
         {
             try
             {
-                var database = cn.GetDatabase("Ebas"); // Consistencia en el nombre de la base de datos
-                var collection = database.GetCollection<Usuarios>("Usuarios"); // Consistencia en el nombre de la colección
-                var Usuarios = new Usuarios
+                var database = cn.GetDatabase("Ebas");
+                var collection = database.GetCollection<Usuarios>("Usuarios");
+                var usuario = new Usuarios
                 {
                     Nombres = Nombres,
                     Apellidos = Apellidos,
@@ -116,25 +137,21 @@ namespace Ebasproyecto.Controllers
                     TipoDocumento = TipoDocumento,
                     Correo = Correo,
                     Sexo = Sexo,
-                    Edad = Edad,
-                    Municipio = Municipio,
-                    Direccion = Direccion,
-                    EstadoCivil = EstadoCivil,
                     Telefono = Telefono,
                     TipoPoblacion = TipoPoblacion,
-                    TipoUsuario = TipoUsuario,
+                    TipoUsuario = "Aprendiz",
                     Contraseña = Contraseña,
-                    FichaId = Codigoficha
+                    FichaId = Codigoficha,
+                    ProgramaId = ProgramaId // Asociar el programa de formación
                 };
 
-                collection.InsertOne(Usuarios);
-                return RedirectToAction("Aprendices"); // Corrección en el redireccionamiento
+                collection.InsertOne(usuario);
+                return RedirectToAction("Aprendices");
             }
             catch (Exception ex)
             {
-                // Manejo de excepción, opcionalmente puedes mostrar un mensaje de error
                 Console.WriteLine($"Error: {ex.Message}");
-                return RedirectToAction("Aprendices", new { mensaje = "Error al insertar la sala." });
+                return RedirectToAction("Aprendices", new { mensaje = "Error al insertar el usuario." });
             }
         }
         [HttpPost]
@@ -159,10 +176,6 @@ namespace Ebasproyecto.Controllers
                     TipoDocumento = TipoDocumento,
                     Correo = Correo,
                     Sexo = Sexo,
-                    Edad = Edad,
-                    Municipio = Municipio,
-                    Direccion = Direccion,
-                    EstadoCivil = EstadoCivil,
                     Telefono = Telefono,
                     TipoPoblacion = TipoPoblacion,
                     TipoUsuario = TipoUsuario,
